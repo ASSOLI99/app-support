@@ -1,0 +1,3081 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>عمان جو اكسبرس — Amman Jo Express</title>
+    <meta
+      name="description"
+      content="عمان جو اكسبرس — تطبيق التوصيل والمشاوير في الأردن. Amman Jo Express — ride-hailing & delivery in Jordan."
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue-50: #eff6ff;
+        --blue-100: #dbeafe;
+        --blue-200: #bfdbfe;
+        --blue-500: #3b82f6;
+        --blue-600: #2563eb;
+        --blue-700: #1d4ed8;
+        --blue-900: #1e3a8a;
+        --blue-950: #0f1e3d;
+        --ink: #0f172a;
+        --body: #475569;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --bg: #ffffff;
+        --bg-soft: #f8fafc;
+        --card: #ffffff;
+        --radius: 16px;
+        --shadow:
+          0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+        --shadow-lg: 0 20px 50px -12px rgba(37, 99, 235, 0.25);
+        --font: "Cairo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --maxw: 1120px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f1f5f9;
+          --body: #cbd5e1;
+          --muted: #94a3b8;
+          --line: #1e293b;
+          --bg: #0b1220;
+          --bg-soft: #0f172a;
+          --card: #111c31;
+          --blue-50: #0f2547;
+          --blue-100: #132e57;
+          --shadow:
+            0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+          --shadow-lg: 0 20px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--body);
+        font-family: var(--font);
+        font-size: 16.5px;
+        line-height: 1.85;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--ink);
+        line-height: 1.45;
+        margin: 0;
+        font-weight: 700;
+      }
+      /* Arabic is cursive-joined — never track it. Latin gets the tightening. */
+      html[dir="ltr"] h1,
+      html[dir="ltr"] h2,
+      html[dir="ltr"] h3,
+      html[dir="ltr"] h4 {
+        letter-spacing: -0.015em;
+      }
+      p {
+        margin: 0 0 1em;
+      }
+      a {
+        color: var(--blue-600);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      img,
+      svg {
+        max-width: 100%;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 22px;
+      }
+
+      /* ---------- language switching ---------- */
+      [data-lang] {
+        display: none;
+      }
+      html[lang="ar"] [data-lang="ar"] {
+        display: block;
+      }
+      html[lang="en"] [data-lang="en"] {
+        display: block;
+      }
+      span[data-lang],
+      a[data-lang],
+      strong[data-lang],
+      li[data-lang] {
+        display: none;
+      }
+      html[lang="ar"] span[data-lang="ar"],
+      html[lang="ar"] a[data-lang="ar"],
+      html[lang="ar"] strong[data-lang="ar"] {
+        display: inline;
+      }
+      html[lang="en"] span[data-lang="en"],
+      html[lang="en"] a[data-lang="en"],
+      html[lang="en"] strong[data-lang="en"] {
+        display: inline;
+      }
+      html[lang="ar"] li[data-lang="ar"] {
+        display: list-item;
+      }
+      html[lang="en"] li[data-lang="en"] {
+        display: list-item;
+      }
+
+      /* ---------- header ---------- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: saturate(180%) blur(14px);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        height: 68px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 700;
+        color: var(--ink);
+        font-size: 1.06rem;
+      }
+      .brand:hover {
+        text-decoration: none;
+      }
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        flex: none;
+        background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+        display: grid;
+        place-items: center;
+        color: #fff;
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      }
+      .nav-links {
+        display: flex;
+        gap: 6px;
+        margin-inline-start: auto;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--body);
+        font-size: 0.93rem;
+        font-weight: 500;
+        padding: 8px 13px;
+        border-radius: 9px;
+        transition: 0.18s;
+      }
+      .nav-links a:hover {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        text-decoration: none;
+      }
+      .lang-btn {
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 0.87rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 8px 15px;
+        border-radius: 999px;
+        transition: 0.18s;
+        white-space: nowrap;
+      }
+      .lang-btn:hover {
+        border-color: var(--blue-600);
+        color: var(--blue-600);
+        box-shadow: 0 0 0 4px var(--blue-50);
+      }
+      @media (max-width: 820px) {
+        .nav-links a {
+          display: none;
+        }
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        padding: 96px 0 84px;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(
+            58rem 30rem at 78% -12%,
+            color-mix(in srgb, var(--blue-500) 20%, transparent),
+            transparent 62%
+          ),
+          radial-gradient(
+            45rem 26rem at 8% 8%,
+            color-mix(in srgb, var(--blue-600) 12%, transparent),
+            transparent 60%
+          );
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--blue-50);
+        color: var(--blue-700);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 22%, transparent);
+        padding: 6px 15px;
+        border-radius: 999px;
+        font-size: 0.83rem;
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--blue-600);
+        box-shadow: 0 0 0 4px
+          color-mix(in srgb, var(--blue-600) 18%, transparent);
+      }
+      .hero h1 {
+        font-size: clamp(2.1rem, 5.6vw, 3.65rem);
+        margin-bottom: 20px;
+        line-height: 1.35;
+      }
+      html[dir="ltr"] .hero h1 {
+        letter-spacing: -0.03em;
+      }
+      .hero h1 .grad {
+        background: linear-gradient(
+          120deg,
+          var(--blue-600),
+          var(--blue-500) 55%,
+          #60a5fa
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .lead {
+        font-size: 1.13rem;
+        max-width: 620px;
+        color: var(--body);
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        justify-content: center;
+        padding: 13px 26px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.97rem;
+        font-family: inherit;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: 0.2s;
+      }
+      .btn:hover {
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: var(--blue-600);
+        color: #fff;
+        box-shadow: var(--shadow-lg);
+      }
+      .btn-primary:hover {
+        background: var(--blue-700);
+      }
+      .btn-ghost {
+        background: var(--card);
+        color: var(--ink);
+        border-color: var(--line);
+        box-shadow: var(--shadow);
+      }
+      .btn-ghost:hover {
+        border-color: var(--blue-600);
+        color: var(--blue-600);
+      }
+
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 38px;
+        margin-top: 56px;
+      }
+      .stat b {
+        display: block;
+        font-size: 1.75rem;
+        color: var(--ink);
+        line-height: 1.2;
+      }
+      .stat span {
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+
+      /* ---------- sections ---------- */
+      section {
+        padding: 82px 0;
+      }
+      .soft {
+        background: var(--bg-soft);
+        border-block: 1px solid var(--line);
+      }
+      .sec-head {
+        max-width: 660px;
+        margin-bottom: 52px;
+      }
+      .eyebrow {
+        color: var(--blue-600);
+        font-weight: 700;
+        font-size: 0.82rem;
+        margin-bottom: 12px;
+      }
+      html[dir="ltr"] .eyebrow {
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+      .sec-head h2 {
+        font-size: clamp(1.65rem, 3.6vw, 2.35rem);
+        margin-bottom: 14px;
+      }
+      .sec-head p {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 28px 26px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+      }
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--blue-600) 40%, transparent);
+        box-shadow: var(--shadow-lg);
+      }
+      .ico {
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 18px;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--blue-500) 16%, transparent),
+          color-mix(in srgb, var(--blue-600) 8%, transparent)
+        );
+        color: var(--blue-600);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 20%, transparent);
+      }
+      .card h3 {
+        font-size: 1.09rem;
+        margin-bottom: 9px;
+      }
+      .card p {
+        font-size: 0.94rem;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .steps {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .step {
+        position: relative;
+        padding-block-start: 18px;
+      }
+      .step .n {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin-bottom: 14px;
+        background: var(--blue-600);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      }
+      .step h3 {
+        font-size: 1.04rem;
+        margin-bottom: 7px;
+      }
+      .step p {
+        font-size: 0.93rem;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      /* ---------- privacy ---------- */
+      .policy {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .policy-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 26px 0 40px;
+      }
+      .tag {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 20%, transparent);
+        padding: 5px 13px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      /* ---- expand / collapse controls ---- */
+      .acc-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 34px;
+      }
+      .acc-ctl {
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--body);
+        transition: 0.18s;
+      }
+      .acc-ctl:hover {
+        border-color: var(--blue-600);
+        color: var(--blue-600);
+        background: var(--blue-50);
+      }
+
+      /* ---- group heading ---- */
+      .pgroup {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin: 52px 0 18px;
+      }
+      .acc-controls + .pgroup {
+        margin-top: 6px;
+      }
+      .pgroup-n {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--blue-600);
+        background: var(--blue-50);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 22%, transparent);
+        border-radius: 8px;
+        padding: 3px 9px;
+        flex: none;
+        font-variant-numeric: tabular-nums;
+      }
+      .policy .pgroup h3 {
+        font-size: 1.05rem;
+        margin: 0;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .pgroup::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      /* ---- accordion ---- */
+      .acc {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        margin-bottom: 10px;
+        scroll-margin-top: 84px;
+        overflow: hidden;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .acc[open] {
+        border-color: color-mix(in srgb, var(--blue-600) 38%, transparent);
+        box-shadow: var(--shadow);
+      }
+      .acc > summary {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 20px;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        transition: background 0.18s;
+      }
+      .acc > summary::-webkit-details-marker {
+        display: none;
+      }
+      .acc > summary:hover {
+        background: var(--blue-50);
+      }
+      .acc > summary:focus-visible {
+        outline: 2px solid var(--blue-600);
+        outline-offset: -2px;
+      }
+      .acc-t {
+        flex: 1;
+        font-weight: 600;
+        font-size: 1.02rem;
+        color: var(--ink);
+        line-height: 1.5;
+      }
+      .acc-chev {
+        width: 19px;
+        height: 19px;
+        flex: none;
+        color: var(--blue-600);
+        transition: transform 0.22s ease;
+      }
+      .acc[open] > summary .acc-chev {
+        transform: rotate(180deg);
+      }
+      .acc-body {
+        padding: 2px 20px 20px;
+        border-top: 1px solid var(--line);
+        margin-top: -1px;
+      }
+      .acc-body > div[data-lang] > *:first-child {
+        margin-top: 16px;
+      }
+      .policy h4 {
+        font-size: 1rem;
+        margin: 26px 0 8px;
+        color: var(--ink);
+      }
+      .policy p,
+      .policy li {
+        font-size: 0.97rem;
+      }
+      .policy ul {
+        padding-inline-start: 22px;
+        margin: 0 0 1.1em;
+      }
+      .policy li {
+        margin-bottom: 9px;
+      }
+      .policy li::marker {
+        color: var(--blue-600);
+      }
+      .note {
+        background: var(--blue-50);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 22%, transparent);
+        border-inline-start: 4px solid var(--blue-600);
+        border-radius: 12px;
+        padding: 18px 22px;
+        margin: 24px 0;
+      }
+      .note p {
+        margin: 0;
+        font-size: 0.94rem;
+        color: var(--ink);
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+        margin: 20px 0 26px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 520px;
+        font-size: 0.92rem;
+        background: var(--card);
+      }
+      th,
+      td {
+        padding: 13px 16px;
+        text-align: start;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        background: var(--bg-soft);
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 0.87rem;
+        white-space: nowrap;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* ---------- contact ---------- */
+      .contact-grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        margin-top: 34px;
+      }
+      .contact-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 26px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+      }
+      .contact-card:hover {
+        border-color: var(--blue-600);
+        transform: translateY(-3px);
+      }
+      .contact-card .k {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      html[dir="ltr"] .contact-card .k {
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .contact-card .v {
+        font-size: 1.04rem;
+        font-weight: 600;
+        color: var(--ink);
+        word-break: break-word;
+      }
+      .contact-card a.v {
+        color: var(--blue-600);
+      }
+      .ltr {
+        direction: ltr;
+        display: inline-block;
+        unicode-bidi: isolate;
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        background: var(--blue-950);
+        color: #94a3b8;
+        padding: 52px 0 34px;
+      }
+      footer .brand {
+        color: #fff;
+      }
+      footer .fgrid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        justify-content: space-between;
+        align-items: center;
+      }
+      footer p {
+        margin: 14px 0 0;
+        font-size: 0.88rem;
+        max-width: 420px;
+        color: #94a3b8;
+      }
+      footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      footer nav a {
+        color: #cbd5e1;
+        font-size: 0.9rem;
+      }
+      footer nav a:hover {
+        color: #fff;
+      }
+      .fbottom {
+        margin-top: 34px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.84rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 24px;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .devby {
+        color: #94a3b8;
+      }
+      .devby a {
+        color: #fff;
+        font-weight: 600;
+        border-bottom: 1px solid color-mix(in srgb, #fff 35%, transparent);
+        padding-bottom: 1px;
+        transition: 0.18s;
+      }
+      .devby a:hover {
+        color: var(--blue-200);
+        border-bottom-color: var(--blue-200);
+        text-decoration: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="#top">
+          <span class="logo" aria-hidden="true">
+            <svg
+              width="21"
+              height="21"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 17h1a2 2 0 0 0 2-2V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h1"
+              />
+              <path d="M17 9h2.6a1 1 0 0 1 .82.43L22 12v3a2 2 0 0 1-2 2h-1" />
+              <circle cx="7.5" cy="17.5" r="2" />
+              <circle cx="16.5" cy="17.5" r="2" />
+            </svg>
+          </span>
+          <span data-lang="ar">عمان جو اكسبرس</span>
+          <span data-lang="en">Amman Jo Express</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#features"
+            ><span data-lang="ar">المميزات</span
+            ><span data-lang="en">Features</span></a
+          >
+          <a href="#how"
+            ><span data-lang="ar">كيف يعمل</span
+            ><span data-lang="en">How it works</span></a
+          >
+          <a href="#privacy"
+            ><span data-lang="ar">سياسة الخصوصية</span
+            ><span data-lang="en">Privacy Policy</span></a
+          >
+          <a href="./delete-account.html"
+            ><span data-lang="ar">حذف الحساب</span
+            ><span data-lang="en">Delete Account</span></a
+          >
+          <a href="#contact"
+            ><span data-lang="ar">تواصل معنا</span
+            ><span data-lang="en">Contact</span></a
+          >
+        </nav>
+        <button
+          class="lang-btn"
+          id="langBtn"
+          type="button"
+          onclick="toggleLang()"
+        >
+          <span data-lang="ar">English</span><span data-lang="en">العربية</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="wrap">
+          <span class="pill"
+            ><span class="dot"></span>
+            <span data-lang="ar">مشاوير وتوصيل داخل الأردن</span>
+            <span data-lang="en">Rides &amp; delivery across Jordan</span>
+          </span>
+
+          <div data-lang="ar">
+            <h1>
+              وصّلك ووصّل طلباتك<br /><span class="grad">بضغطة زر واحدة</span>
+            </h1>
+            <p class="lead">
+              عمان جو اكسبرس تطبيق أردني للمشاوير والتوصيل — احجز سيارة أو أرسل
+              طردك، تابع السائق على الخريطة لحظة بلحظة، وادفع بالسعر الواضح من
+              البداية بدون مفاجآت.
+            </p>
+          </div>
+          <div data-lang="en">
+            <h1>
+              Rides and deliveries<br /><span class="grad"
+                >in a single tap</span
+              >
+            </h1>
+            <p class="lead">
+              Amman Jo Express is a Jordanian ride-hailing and delivery app —
+              book a car or send a parcel, follow your driver live on the map,
+              and pay a clear upfront price with no surprises.
+            </p>
+          </div>
+
+          <div class="cta">
+            <a class="btn btn-primary" href="#privacy">
+              <span data-lang="ar">اقرأ سياسة الخصوصية</span
+              ><span data-lang="en">Read the Privacy Policy</span>
+            </a>
+            <a class="btn btn-ghost" href="#contact">
+              <span data-lang="ar">تواصل معنا</span
+              ><span data-lang="en">Get in touch</span>
+            </a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <b>24/7</b><span data-lang="ar">خدمة على مدار الساعة</span
+              ><span data-lang="en">Always available</span>
+            </div>
+            <div class="stat">
+              <b>100%</b><span data-lang="ar">سائقون موثّقون</span
+              ><span data-lang="en">Verified drivers</span>
+            </div>
+            <div class="stat">
+              <b>iOS · Android</b><span data-lang="ar">متوفر على المنصتين</span
+              ><span data-lang="en">On both platforms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <section id="features">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">
+              <span data-lang="ar">المميزات</span
+              ><span data-lang="en">Features</span>
+            </div>
+            <div data-lang="ar">
+              <h2>كل ما تحتاجه في تطبيق واحد</h2>
+              <p>
+                صُمّم التطبيق ليكون بسيطاً وسريعاً — بواجهة عربية كاملة تدعم
+                الكتابة من اليمين لليسار.
+              </p>
+            </div>
+            <div data-lang="en">
+              <h2>Everything you need in one app</h2>
+              <p>
+                Built to be simple and fast — with a full Arabic, right-to-left
+                interface.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>تتبّع حي على الخريطة</h3>
+                <p>
+                  شاهد موقع السائق لحظة بلحظة من قبول الطلب وحتى الوصول، مع وقت
+                  وصول تقديري محدّث.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Live map tracking</h3>
+                <p>
+                  Watch your driver's location in real time from acceptance to
+                  arrival, with a live ETA.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 1v22" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>سعر واضح مسبقاً</h3>
+                <p>
+                  تعرف التكلفة قبل تأكيد الطلب، محسوبة على المسافة والوقت — بدون
+                  رسوم خفية.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Clear upfront pricing</h3>
+                <p>
+                  See the cost before you confirm, calculated from distance and
+                  time — no hidden fees.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>توصيل الطرود</h3>
+                <p>
+                  أرسل طرداً من نقطة إلى أخرى داخل المدينة، مع صورة إثبات تسليم
+                  عند وصول الطرد.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Parcel delivery</h3>
+                <p>
+                  Send a package point-to-point across the city, with a
+                  proof-of-delivery photo on drop-off.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>سائقون موثّقون</h3>
+                <p>
+                  كل سائق يمرّ بمراجعة للوثائق والمركبة قبل تفعيل حسابه على
+                  المنصة.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Verified drivers</h3>
+                <p>
+                  Every driver passes a document and vehicle review before their
+                  account goes live.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>إشعارات فورية</h3>
+                <p>
+                  تنبيهات لحظية عند قبول الطلب، ووصول السائق، وإتمام الرحلة أو
+                  التسليم.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Instant notifications</h3>
+                <p>
+                  Real-time alerts when your order is accepted, the driver
+                  arrives, and the trip completes.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 3v18h18" />
+                  <path d="m19 9-5 5-4-4-3 3" />
+                </svg>
+              </div>
+              <div data-lang="ar">
+                <h3>سجل رحلاتك</h3>
+                <p>
+                  ارجع لأي رحلة أو طلب سابق واطّلع على التفاصيل والتكلفة في أي
+                  وقت.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Full trip history</h3>
+                <p>
+                  Revisit any past ride or order and review its details and cost
+                  at any time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how" class="soft">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">
+              <span data-lang="ar">كيف يعمل</span
+              ><span data-lang="en">How it works</span>
+            </div>
+            <div data-lang="ar">
+              <h2>أربع خطوات فقط</h2>
+              <p>من فتح التطبيق حتى الوصول — كل شيء واضح ومباشر.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Four simple steps</h2>
+              <p>
+                From opening the app to arrival — everything stays clear and
+                direct.
+              </p>
+            </div>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="n">1</div>
+              <div data-lang="ar">
+                <h3>سجّل دخولك</h3>
+                <p>
+                  أنشئ حساباً برقم هاتفك أو عبر Google أو Apple في أقل من دقيقة.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Sign in</h3>
+                <p>
+                  Create an account with your phone number, Google, or Apple in
+                  under a minute.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="n">2</div>
+              <div data-lang="ar">
+                <h3>حدّد وجهتك</h3>
+                <p>
+                  اختر نقطة الانطلاق والوصول على الخريطة، أو اختر من عناوينك
+                  المحفوظة.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Set your destination</h3>
+                <p>
+                  Pick pickup and drop-off on the map, or choose from your saved
+                  addresses.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="n">3</div>
+              <div data-lang="ar">
+                <h3>أكّد الطلب</h3>
+                <p>
+                  راجع السعر التقديري وأكّد — يصلك أقرب سائق متاح خلال لحظات.
+                </p>
+              </div>
+              <div data-lang="en">
+                <h3>Confirm</h3>
+                <p>
+                  Review the estimated fare and confirm — the nearest available
+                  driver is on the way.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="n">4</div>
+              <div data-lang="ar">
+                <h3>تابع ووصل</h3>
+                <p>تابع السائق على الخريطة حتى الوصول، ثم ادفع وقيّم الرحلة.</p>
+              </div>
+              <div data-lang="en">
+                <h3>Track &amp; arrive</h3>
+                <p>
+                  Follow the driver live to your destination, then pay and rate
+                  the trip.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== PRIVACY POLICY ===================== -->
+      <section id="privacy">
+        <div class="wrap">
+          <div class="policy">
+            <div class="eyebrow">
+              <span data-lang="ar">المستندات القانونية</span
+              ><span data-lang="en">Legal</span>
+            </div>
+            <div data-lang="ar">
+              <h2 style="font-size: clamp(1.8rem, 4vw, 2.5rem)">
+                سياسة الخصوصية
+              </h2>
+            </div>
+            <div data-lang="en">
+              <h2 style="font-size: clamp(1.8rem, 4vw, 2.5rem)">
+                Privacy Policy
+              </h2>
+            </div>
+
+            <div class="policy-meta">
+              <span class="tag"
+                ><span data-lang="ar">آخر تحديث: 4 آب / أغسطس 2026</span
+                ><span data-lang="en">Last updated: 4 August 2026</span></span
+              >
+              <span class="tag"
+                ><span data-lang="ar">تاريخ السريان: 4 آب / أغسطس 2026</span
+                ><span data-lang="en">Effective: 4 August 2026</span></span
+              >
+              <span class="tag"
+                ><span data-lang="ar">الإصدار 1.0</span
+                ><span data-lang="en">Version 1.0</span></span
+              >
+            </div>
+
+            <div data-lang="ar">
+              <p>
+                تشرح هذه السياسة كيف يقوم تطبيق
+                <strong>عمان جو اكسبرس</strong> ("التطبيق"، "نحن") بجمع بياناتك
+                الشخصية واستخدامها وتخزينها وحمايتها ومشاركتها عند استخدامك
+                لخدمات المشاوير والتوصيل التي نقدّمها، سواء كنت راكباً أو
+                مرسِلاً لطرد أو سائقاً مسجّلاً على المنصة.
+              </p>
+              <p>
+                نحن نتعامل مع بياناتك على أنها أمانة. لا نبيع بياناتك الشخصية
+                لأي طرف ثالث، ولا نشاركها لأغراض إعلانية، ولا نجمع أكثر مما
+                تحتاجه الخدمة فعلياً لتعمل. باستخدامك للتطبيق فإنك توافق على
+                الممارسات الموضّحة في هذه السياسة. إذا كنت لا توافق على أي جزء
+                منها، نرجو التوقف عن استخدام التطبيق.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                This policy explains how the
+                <strong>Amman Jo Express</strong> application ("the App", "we",
+                "us") collects, uses, stores, protects, and shares your personal
+                data when you use our ride-hailing and delivery services —
+                whether you are a passenger, a parcel sender, or a driver
+                registered on the platform.
+              </p>
+              <p>
+                We treat your data as a responsibility we hold on your behalf.
+                We do not sell your personal data to third parties, we do not
+                share it for advertising purposes, and we do not collect more
+                than the service genuinely needs in order to function. By using
+                the App you agree to the practices described in this policy. If
+                you do not agree with any part of it, please discontinue use of
+                the App.
+              </p>
+            </div>
+
+            <div class="acc-controls">
+              <button type="button" class="acc-ctl" data-acc="open">
+                <span data-lang="ar">فتح الكل</span
+                ><span data-lang="en">Expand all</span>
+              </button>
+              <button type="button" class="acc-ctl" data-acc="close">
+                <span data-lang="ar">إغلاق الكل</span
+                ><span data-lang="en">Collapse all</span>
+              </button>
+            </div>
+            <div class="pgroup">
+              <span class="pgroup-n">01</span>
+              <h3>
+                <span data-lang="ar">الأساسيات</span
+                ><span data-lang="en">The basics</span>
+              </h3>
+            </div>
+            <details class="acc" id="p1">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">1. من نحن</span
+              ><span data-lang="en">1. Who we are</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                عمان جو اكسبرس منصة أردنية لخدمات نقل الركاب وتوصيل الطرود، تعمل
+                عبر تطبيق للهواتف الذكية على نظامي iOS و Android. المنصة هي
+                المتحكم في البيانات (Data Controller) فيما يتعلق بالبيانات
+                الشخصية التي تُجمع من خلال التطبيق.
+              </p>
+              <p>
+                تنطبق هذه السياسة على جميع مستخدمي التطبيق: الركاب، ومرسلي
+                الطرود ومستلميها، والسائقين المسجّلين، وأي شخص يتفاعل مع خدمة
+                الدعم لدينا. وتغطي التطبيق وصفحاتنا الإلكترونية وقنوات الدعم
+                المرتبطة بها.
+              </p>
+              <p>
+                إن كان لديك أي استفسار حول هذه السياسة أو حول طريقة معالجتنا
+                لبياناتك، يمكنك مراسلتنا مباشرة عبر بيانات التواصل الموضّحة في
+                <a href="#p21">القسم 21</a>.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                Amman Jo Express is a Jordanian platform for passenger transport
+                and parcel delivery, operating through a smartphone application
+                on iOS and Android. The platform acts as the Data Controller for
+                personal data collected through the App.
+              </p>
+              <p>
+                This policy applies to all users of the App: passengers, parcel
+                senders and recipients, registered drivers, and anyone who
+                interacts with our support team. It covers the App, our web
+                pages, and the associated support channels.
+              </p>
+              <p>
+                If you have any question about this policy or about how we
+                process your data, you can contact us directly using the details
+                in <a href="#p21">Section 21</a>.
+              </p>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">02</span>
+              <h3>
+                <span data-lang="ar">البيانات التي نتعامل معها</span
+                ><span data-lang="en">The data we handle</span>
+              </h3>
+            </div>
+            <details class="acc" id="p2">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">2. البيانات التي نجمعها</span
+              ><span data-lang="en">2. Data we collect</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                نجمع فئات محدودة ومحدّدة من البيانات، كل فئة منها مرتبطة بغرض
+                تشغيلي واضح:
+              </p>
+              <h4>أ) بيانات تقدّمها أنت بنفسك</h4>
+              <ul>
+                <li>
+                  <strong>بيانات الحساب:</strong> الاسم الكامل، رقم الهاتف،
+                  البريد الإلكتروني، وصورة الملف الشخصي إن اخترت إضافتها.
+                </li>
+                <li>
+                  <strong>بيانات تسجيل الدخول:</strong> عند التسجيل عبر Google
+                  أو Apple نستلم معرّف الحساب والاسم والبريد الإلكتروني فقط — لا
+                  نستلم كلمة مرورك أبداً.
+                </li>
+                <li>
+                  <strong>العناوين المحفوظة:</strong> المواقع التي تحفظها بنفسك
+                  مثل "المنزل" أو "العمل" لتسريع الحجز.
+                </li>
+                <li>
+                  <strong>تفاصيل الطلب:</strong> نقطة الانطلاق، الوجهة، وقت
+                  الطلب، نوع الخدمة، وأي ملاحظات أو تعليمات تكتبها للسائق.
+                </li>
+                <li>
+                  <strong>بيانات الطرود:</strong> وصف الطرد، اسم المستلم ورقم
+                  هاتفه عند إرسال طرد نيابة عن شخص آخر.
+                </li>
+                <li>
+                  <strong>مراسلات الدعم:</strong> الرسائل والشكاوى والبلاغات
+                  التي ترسلها لفريق خدمة العملاء.
+                </li>
+                <li>
+                  <strong>التقييمات:</strong> التقييم والملاحظات التي تتركها بعد
+                  انتهاء الرحلة أو التوصيل.
+                </li>
+              </ul>
+              <h4>ب) بيانات تُجمع تلقائياً</h4>
+              <ul>
+                <li>
+                  <strong>الموقع الجغرافي:</strong> بالتفصيل في
+                  <a href="#p3">القسم 3</a>.
+                </li>
+                <li>
+                  <strong>بيانات الجهاز:</strong> نوع الجهاز، نظام التشغيل
+                  وإصداره، إصدار التطبيق، ولغة الجهاز.
+                </li>
+                <li>
+                  <strong>معرّف الإشعارات:</strong> رمز تقني (Push Token)
+                  يُستخدم فقط لإيصال الإشعارات إلى جهازك.
+                </li>
+                <li>
+                  <strong>سجلات الاستخدام:</strong> أوقات فتح التطبيق، الشاشات
+                  التي زرتها، والأخطاء التقنية التي واجهتها.
+                </li>
+                <li>
+                  <strong>سجل الرحلات:</strong> الرحلات والطلبات السابقة وحالتها
+                  وتكلفتها والمسافة والمدة.
+                </li>
+              </ul>
+              <h4>ج) بيانات لا نجمعها إطلاقاً</h4>
+              <ul>
+                <li>لا نجمع بيانات بطاقتك البنكية أو أرقامها داخل التطبيق.</li>
+                <li>
+                  لا نصل إلى جهات الاتصال أو الرسائل أو الصور في هاتفك خارج ما
+                  تختاره صراحةً.
+                </li>
+                <li>
+                  لا نجمع بيانات بيومترية (بصمة، وجه) — المصادقة البيومترية إن
+                  استخدمتها تتم داخل نظام هاتفك ولا تصل إلينا.
+                </li>
+                <li>
+                  لا نجمع بيانات حساسة مثل المعتقد الديني أو الحالة الصحية أو
+                  الانتماء السياسي.
+                </li>
+              </ul>
+            </div>
+            <div data-lang="en">
+              <p>
+                We collect a limited and specific set of data categories, each
+                tied to a clear operational purpose:
+              </p>
+              <h4>a) Data you provide yourself</h4>
+              <ul>
+                <li>
+                  <strong>Account details:</strong> full name, phone number,
+                  email address, and a profile photo if you choose to add one.
+                </li>
+                <li>
+                  <strong>Sign-in data:</strong> when you register via Google or
+                  Apple we receive only the account identifier, name, and email
+                  — we never receive your password.
+                </li>
+                <li>
+                  <strong>Saved addresses:</strong> locations you save yourself,
+                  such as "Home" or "Work", to speed up booking.
+                </li>
+                <li>
+                  <strong>Order details:</strong> pickup point, destination,
+                  order time, service type, and any notes or instructions you
+                  write for the driver.
+                </li>
+                <li>
+                  <strong>Parcel details:</strong> package description,
+                  recipient name and phone number when you send a parcel on
+                  someone's behalf.
+                </li>
+                <li>
+                  <strong>Support correspondence:</strong> messages, complaints,
+                  and reports you send to our customer service team.
+                </li>
+                <li>
+                  <strong>Ratings:</strong> the rating and feedback you leave
+                  after a ride or delivery is complete.
+                </li>
+              </ul>
+              <h4>b) Data collected automatically</h4>
+              <ul>
+                <li>
+                  <strong>Location:</strong> described in detail in
+                  <a href="#p3">Section 3</a>.
+                </li>
+                <li>
+                  <strong>Device data:</strong> device model, operating system
+                  and version, app version, and device language.
+                </li>
+                <li>
+                  <strong>Notification identifier:</strong> a technical push
+                  token used solely to deliver notifications to your device.
+                </li>
+                <li>
+                  <strong>Usage logs:</strong> when the app was opened, which
+                  screens were visited, and technical errors encountered.
+                </li>
+                <li>
+                  <strong>Trip history:</strong> past rides and orders with
+                  their status, cost, distance, and duration.
+                </li>
+              </ul>
+              <h4>c) Data we never collect</h4>
+              <ul>
+                <li>
+                  We do not collect bank card details or card numbers inside the
+                  App.
+                </li>
+                <li>
+                  We do not access your contacts, messages, or photos beyond
+                  what you explicitly select.
+                </li>
+                <li>
+                  We do not collect biometric data (fingerprint, face) —
+                  biometric authentication, if you use it, happens inside your
+                  phone's operating system and never reaches us.
+                </li>
+                <li>
+                  We do not collect sensitive data such as religious belief,
+                  health status, or political affiliation.
+                </li>
+              </ul>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p3">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">3. بيانات الموقع الجغرافي</span
+              ><span data-lang="en">3. Location data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                الموقع الجغرافي هو أكثر البيانات حساسية التي نتعامل معها، ولذلك
+                نوضّح استخدامه بتفصيل كامل.
+              </p>
+              <h4>بالنسبة للركاب</h4>
+              <ul>
+                <li>
+                  نستخدم موقعك <strong>أثناء استخدام التطبيق فقط</strong> لتحديد
+                  نقطة الانطلاق تلقائياً وعرض السائقين القريبين منك.
+                </li>
+                <li>لا نتتبّع موقعك في الخلفية عندما يكون التطبيق مغلقاً.</li>
+                <li>
+                  يمكنك إدخال العنوان يدوياً ورفض إذن الموقع — سيظل التطبيق يعمل
+                  مع بعض القيود على الدقة والراحة.
+                </li>
+              </ul>
+              <h4>بالنسبة للسائقين</h4>
+              <ul>
+                <li>
+                  نجمع موقع السائق
+                  <strong
+                    >بشكل مستمر أثناء وجوده في وضع الاتصال (Online)</strong
+                  >
+                  أو أثناء تنفيذ رحلة نشطة — بما في ذلك عمل التطبيق في الخلفية.
+                </li>
+                <li>
+                  هذا ضروري لمطابقة السائق مع الطلبات القريبة، ولتمكين الراكب من
+                  تتبّع سيارته، ولحساب المسافة والأجرة بدقة، وللسلامة في حال
+                  وقوع حادث أو نزاع.
+                </li>
+                <li>
+                  يتوقف جمع الموقع فوراً عند تحويل الحساب إلى وضع عدم الاتصال
+                  (Offline).
+                </li>
+              </ul>
+              <h4>ماذا نفعل ببيانات الموقع</h4>
+              <ul>
+                <li>
+                  نستخدمها لإظهار الخريطة، وحساب المسار والمسافة والتكلفة،
+                  وتقدير وقت الوصول.
+                </li>
+                <li>
+                  نحتفظ بنقاط الانطلاق والوصول ضمن سجل الرحلة لأغراض الفوترة
+                  والدعم وحل النزاعات.
+                </li>
+                <li>
+                  لا نستخدم بيانات موقعك لبناء ملفات إعلانية، ولا نبيعها أو
+                  نشاركها مع وسطاء بيانات.
+                </li>
+                <li>
+                  يمكنك في أي وقت سحب إذن الوصول للموقع من إعدادات النظام في
+                  هاتفك.
+                </li>
+              </ul>
+            </div>
+            <div data-lang="en">
+              <p>
+                Location is the most sensitive category of data we handle, so we
+                describe its use in full detail.
+              </p>
+              <h4>For passengers</h4>
+              <ul>
+                <li>
+                  We use your location
+                  <strong>only while you are using the App</strong>, to set your
+                  pickup point automatically and show nearby drivers.
+                </li>
+                <li>
+                  We do not track your location in the background while the App
+                  is closed.
+                </li>
+                <li>
+                  You may enter an address manually and decline the location
+                  permission — the App still works, with some loss of accuracy
+                  and convenience.
+                </li>
+              </ul>
+              <h4>For drivers</h4>
+              <ul>
+                <li>
+                  We collect a driver's location
+                  <strong>continuously while they are Online</strong> or while
+                  an active trip is in progress — including while the App runs
+                  in the background.
+                </li>
+                <li>
+                  This is necessary to match drivers with nearby orders, let
+                  passengers track the vehicle, calculate distance and fare
+                  accurately, and support safety in the event of an accident or
+                  dispute.
+                </li>
+                <li>
+                  Location collection stops immediately when the account is
+                  switched to Offline.
+                </li>
+              </ul>
+              <h4>What we do with location data</h4>
+              <ul>
+                <li>
+                  We use it to render the map, compute route, distance and fare,
+                  and estimate arrival time.
+                </li>
+                <li>
+                  We retain pickup and drop-off points within the trip record
+                  for billing, support, and dispute resolution.
+                </li>
+                <li>
+                  We do not use location to build advertising profiles, and we
+                  do not sell or share it with data brokers.
+                </li>
+                <li>
+                  You can withdraw the location permission at any time from your
+                  phone's system settings.
+                </li>
+              </ul>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">03</span>
+              <h3>
+                <span data-lang="ar">استخدام البيانات ومشاركتها</span
+                ><span data-lang="en">Using and sharing data</span>
+              </h3>
+            </div>
+            <details class="acc" id="p4">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">4. أغراض استخدام البيانات</span
+              ><span data-lang="en">4. How we use your data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>نستخدم بياناتك للأغراض التالية حصراً:</p>
+              <ul>
+                <li>
+                  <strong>تقديم الخدمة:</strong> إنشاء حسابك، استقبال طلبك،
+                  مطابقتك مع سائق، وتنفيذ الرحلة أو التوصيل.
+                </li>
+                <li>
+                  <strong>التسعير والفوترة:</strong> حساب الأجرة بناءً على
+                  المسافة والزمن وتعرفة الخدمة، وإصدار سجل التكلفة.
+                </li>
+                <li>
+                  <strong>التواصل التشغيلي:</strong> إرسال إشعارات حالة الطلب
+                  وتمكين التواصل بينك وبين السائق أثناء الرحلة.
+                </li>
+                <li>
+                  <strong>الدعم الفني:</strong> الرد على استفساراتك، ومعالجة
+                  الشكاوى، والتحقق من وقائع الرحلة عند وجود نزاع.
+                </li>
+                <li>
+                  <strong>السلامة والأمان:</strong> كشف الاستخدام المسيء أو
+                  الاحتيالي، ومنع الحسابات الوهمية، وحماية الركاب والسائقين.
+                </li>
+                <li>
+                  <strong>تحسين المنتج:</strong> فهم أنماط الاستخدام بشكل مجمّع
+                  لتحسين الأداء وإصلاح الأعطال.
+                </li>
+                <li>
+                  <strong>الالتزام القانوني:</strong> الاستجابة للطلبات
+                  القانونية الرسمية والاحتفاظ بالسجلات التي يفرضها القانون.
+                </li>
+              </ul>
+              <p>
+                لن نستخدم بياناتك لغرض جديد يختلف جوهرياً عن الأغراض أعلاه دون
+                إعلامك أولاً، والحصول على موافقتك حين يقتضي القانون ذلك.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>We use your data exclusively for the following purposes:</p>
+              <ul>
+                <li>
+                  <strong>Delivering the service:</strong> creating your
+                  account, receiving your order, matching you with a driver, and
+                  completing the ride or delivery.
+                </li>
+                <li>
+                  <strong>Pricing and billing:</strong> calculating the fare
+                  from distance, time, and service tariff, and producing a cost
+                  record.
+                </li>
+                <li>
+                  <strong>Operational communication:</strong> sending
+                  order-status notifications and enabling contact between you
+                  and your driver during the trip.
+                </li>
+                <li>
+                  <strong>Customer support:</strong> answering your questions,
+                  handling complaints, and verifying what happened on a trip
+                  when a dispute arises.
+                </li>
+                <li>
+                  <strong>Safety and security:</strong> detecting abusive or
+                  fraudulent use, preventing fake accounts, and protecting
+                  passengers and drivers.
+                </li>
+                <li>
+                  <strong>Product improvement:</strong> understanding usage
+                  patterns in aggregate to improve performance and fix defects.
+                </li>
+                <li>
+                  <strong>Legal compliance:</strong> responding to lawful
+                  official requests and retaining records required by law.
+                </li>
+              </ul>
+              <p>
+                We will not use your data for a materially new purpose without
+                informing you first, and obtaining your consent where the law
+                requires it.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p5">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">5. الأساس القانوني للمعالجة</span
+              ><span data-lang="en">5. Legal basis for processing</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>تعتمد كل عملية معالجة على أساس قانوني واضح:</p>
+            </div>
+            <div data-lang="en">
+              <p>Each processing activity rests on a clear legal basis:</p>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      <span data-lang="ar">الغرض</span
+                      ><span data-lang="en">Purpose</span>
+                    </th>
+                    <th>
+                      <span data-lang="ar">الأساس القانوني</span
+                      ><span data-lang="en">Legal basis</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span data-lang="ar">تنفيذ الرحلة أو التوصيل</span
+                      ><span data-lang="en">Completing a ride or delivery</span>
+                    </td>
+                    <td>
+                      <span data-lang="ar">تنفيذ العقد المبرم معك</span
+                      ><span data-lang="en"
+                        >Performance of our contract with you</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span data-lang="ar">جمع الموقع الجغرافي</span
+                      ><span data-lang="en">Collecting location data</span>
+                    </td>
+                    <td>
+                      <span data-lang="ar">موافقتك الصريحة عبر إذن النظام</span
+                      ><span data-lang="en"
+                        >Your explicit consent via the system permission</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span data-lang="ar">إرسال الإشعارات</span
+                      ><span data-lang="en">Sending notifications</span>
+                    </td>
+                    <td>
+                      <span data-lang="ar">موافقتك + الضرورة التشغيلية</span
+                      ><span data-lang="en"
+                        >Your consent + operational necessity</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span data-lang="ar">منع الاحتيال وحماية المستخدمين</span
+                      ><span data-lang="en"
+                        >Fraud prevention and user protection</span
+                      >
+                    </td>
+                    <td>
+                      <span data-lang="ar">المصلحة المشروعة</span
+                      ><span data-lang="en">Legitimate interest</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span data-lang="ar">الاحتفاظ بالسجلات المالية</span
+                      ><span data-lang="en">Retaining financial records</span>
+                    </td>
+                    <td>
+                      <span data-lang="ar">الالتزام القانوني</span
+                      ><span data-lang="en">Legal obligation</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p6">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">6. مشاركة البيانات مع الآخرين</span
+              ><span data-lang="en">6. Sharing your data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                نشارك الحد الأدنى الضروري من بياناتك، وفقط في الحالات التالية:
+              </p>
+              <ul>
+                <li>
+                  <strong>مع السائق المكلّف بطلبك:</strong> يرى اسمك الأول، رقم
+                  هاتفك (أو رقماً وسيطاً)، نقطة الانطلاق والوجهة، وأي ملاحظات
+                  كتبتها. لا يرى سجل رحلاتك السابقة ولا بريدك الإلكتروني.
+                </li>
+                <li>
+                  <strong>مع الراكب:</strong> يرى اسم السائق، صورته، نوع المركبة
+                  ولوحتها، وتقييمه العام — وهذه بيانات ضرورية للتحقق من هوية
+                  المركبة والسلامة.
+                </li>
+                <li>
+                  <strong>مع مزوّدي الخدمة التقنيين:</strong> بالتفصيل في
+                  <a href="#p7">القسم 7</a>، وبموجب اتفاقيات تلزمهم بحماية
+                  البيانات.
+                </li>
+                <li>
+                  <strong>مع الجهات الرسمية:</strong> عند وجود طلب قانوني صحيح
+                  من جهة قضائية أو تنفيذية مختصة، أو عند الضرورة لحماية حياة شخص
+                  أو منع جريمة.
+                </li>
+                <li>
+                  <strong>في حال بيع أو دمج الشركة:</strong> قد تنتقل البيانات
+                  إلى الكيان الجديد، مع إشعارك المسبق واستمرار سريان هذه السياسة
+                  أو ما يعادلها.
+                </li>
+              </ul>
+              <div class="note">
+                <p>
+                  لا نبيع بياناتك الشخصية. لا نؤجّرها. لا نشاركها مع وسطاء
+                  بيانات أو شبكات إعلانية. هذا التزام صريح وليس صياغة عامة.
+                </p>
+              </div>
+            </div>
+            <div data-lang="en">
+              <p>
+                We share the minimum data necessary, and only in the following
+                cases:
+              </p>
+              <ul>
+                <li>
+                  <strong>With the driver assigned to your order:</strong> they
+                  see your first name, your phone number (or a masked number),
+                  pickup and destination, and any notes you wrote. They do not
+                  see your past trip history or your email address.
+                </li>
+                <li>
+                  <strong>With the passenger:</strong> they see the driver's
+                  name, photo, vehicle type and plate, and overall rating — data
+                  necessary to verify the vehicle and stay safe.
+                </li>
+                <li>
+                  <strong>With technical service providers:</strong> detailed in
+                  <a href="#p7">Section 7</a>, under agreements that oblige them
+                  to protect the data.
+                </li>
+                <li>
+                  <strong>With official authorities:</strong> when there is a
+                  valid legal request from a competent judicial or executive
+                  body, or where necessary to protect someone's life or prevent
+                  a crime.
+                </li>
+                <li>
+                  <strong>In a sale or merger:</strong> data may transfer to the
+                  acquiring entity, with prior notice to you and with this
+                  policy or an equivalent one continuing to apply.
+                </li>
+              </ul>
+              <div class="note">
+                <p>
+                  We do not sell your personal data. We do not rent it. We do
+                  not share it with data brokers or ad networks. This is an
+                  explicit commitment, not boilerplate.
+                </p>
+              </div>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p7">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">7. مزوّدو الخدمة الذين نعتمد عليهم</span
+              ><span data-lang="en">7. Service providers we rely on</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                يعتمد التطبيق على مزوّدين تقنيين موثوقين لتشغيل أجزاء من الخدمة.
+                كل منهم يعالج البيانات بناءً على تعليماتنا وبالقدر اللازم فقط:
+              </p>
+              <ul>
+                <li>
+                  <strong>مزوّد قاعدة البيانات والاستضافة:</strong> لتخزين
+                  بيانات الحسابات والطلبات وإدارة تسجيل الدخول بشكل آمن.
+                </li>
+                <li>
+                  <strong>خدمات الخرائط والملاحة:</strong> لعرض الخرائط وحساب
+                  المسارات والمسافات وتحويل الإحداثيات إلى عناوين مقروءة.
+                </li>
+                <li>
+                  <strong>خدمة الإشعارات:</strong> لإيصال الإشعارات الفورية إلى
+                  جهازك عبر أنظمة Apple و Google.
+                </li>
+                <li>
+                  <strong>مزوّدو تسجيل الدخول:</strong> Google و Apple عند
+                  اختيارك تسجيل الدخول عبرهما.
+                </li>
+                <li>
+                  <strong>خدمات تحليل الأعطال:</strong> لرصد الأخطاء التقنية
+                  وتحسين استقرار التطبيق.
+                </li>
+              </ul>
+              <p>
+                لا يُسمح لأي من هؤلاء المزوّدين باستخدام بياناتك لأغراضهم الخاصة
+                أو بيعها أو الاحتفاظ بها بعد انتهاء الحاجة إليها.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                The App relies on trusted technical providers to run parts of
+                the service. Each processes data on our instructions and only to
+                the extent necessary:
+              </p>
+              <ul>
+                <li>
+                  <strong>Database and hosting provider:</strong> to store
+                  account and order data and manage sign-in securely.
+                </li>
+                <li>
+                  <strong>Maps and navigation services:</strong> to render maps,
+                  compute routes and distances, and turn coordinates into
+                  readable addresses.
+                </li>
+                <li>
+                  <strong>Push notification service:</strong> to deliver instant
+                  notifications to your device via Apple and Google systems.
+                </li>
+                <li>
+                  <strong>Sign-in providers:</strong> Google and Apple, when you
+                  choose to sign in through them.
+                </li>
+                <li>
+                  <strong>Crash analytics services:</strong> to detect technical
+                  errors and improve app stability.
+                </li>
+              </ul>
+              <p>
+                None of these providers is permitted to use your data for their
+                own purposes, sell it, or retain it beyond the period it is
+                needed.
+              </p>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">04</span>
+              <h3>
+                <span data-lang="ar">الحماية والاحتفاظ</span
+                ><span data-lang="en">Protection and retention</span>
+              </h3>
+            </div>
+            <details class="acc" id="p8">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">8. مدة الاحتفاظ بالبيانات</span
+              ><span data-lang="en">8. How long we keep your data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>نحتفظ بالبيانات للمدة اللازمة للغرض الذي جُمعت لأجله فقط:</p>
+              <ul>
+                <li>
+                  <strong>بيانات الحساب:</strong> طوال فترة نشاط حسابك، وتُحذف
+                  خلال <strong>30 يوماً</strong> من طلب حذف الحساب.
+                </li>
+                <li>
+                  <strong>سجل الرحلات والطلبات:</strong> حتى
+                  <strong>24 شهراً</strong> لأغراض الدعم وحل النزاعات، ثم يُحوّل
+                  إلى صيغة مجهّلة الهوية.
+                </li>
+                <li>
+                  <strong>السجلات المالية:</strong> للمدة التي يفرضها القانون
+                  الأردني للسجلات المحاسبية، حتى بعد حذف الحساب.
+                </li>
+                <li>
+                  <strong>بيانات الموقع اللحظية للسائق:</strong> تُحفظ لمدة
+                  قصيرة لأغراض التشغيل، ثم تُلخّص ضمن مسار الرحلة.
+                </li>
+                <li>
+                  <strong>صور إثبات التسليم:</strong> حتى
+                  <strong>90 يوماً</strong> من تاريخ التسليم ثم تُحذف تلقائياً.
+                </li>
+                <li>
+                  <strong>مراسلات الدعم:</strong> حتى
+                  <strong>12 شهراً</strong> من إغلاق التذكرة.
+                </li>
+                <li>
+                  <strong>سجلات الأعطال التقنية:</strong> حتى
+                  <strong>90 يوماً</strong>.
+                </li>
+              </ul>
+              <p>
+                بعد انتهاء هذه المدد تُحذف البيانات نهائياً أو تُجهَّل هويتها
+                بحيث لا يمكن ربطها بك.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                We keep data only for as long as the purpose it was collected
+                for requires:
+              </p>
+              <ul>
+                <li>
+                  <strong>Account data:</strong> for as long as your account is
+                  active, and deleted within <strong>30 days</strong> of a
+                  deletion request.
+                </li>
+                <li>
+                  <strong>Ride and order history:</strong> up to
+                  <strong>24 months</strong> for support and dispute resolution,
+                  then converted to an anonymised form.
+                </li>
+                <li>
+                  <strong>Financial records:</strong> for the period Jordanian
+                  law requires for accounting records, even after account
+                  deletion.
+                </li>
+                <li>
+                  <strong>Real-time driver location:</strong> kept briefly for
+                  operational purposes, then summarised into the trip route.
+                </li>
+                <li>
+                  <strong>Proof-of-delivery photos:</strong> up to
+                  <strong>90 days</strong> from delivery, then deleted
+                  automatically.
+                </li>
+                <li>
+                  <strong>Support correspondence:</strong> up to
+                  <strong>12 months</strong> after the ticket is closed.
+                </li>
+                <li>
+                  <strong>Technical crash logs:</strong> up to
+                  <strong>90 days</strong>.
+                </li>
+              </ul>
+              <p>
+                After these periods, data is permanently deleted or anonymised
+                so it can no longer be linked to you.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p9">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">9. أمن المعلومات</span
+              ><span data-lang="en">9. Information security</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>نطبّق إجراءات تقنية وتنظيمية لحماية بياناتك، من أبرزها:</p>
+              <ul>
+                <li>
+                  تشفير كامل للاتصال بين التطبيق وخوادمنا عبر بروتوكول
+                  <span class="ltr">TLS/HTTPS</span>.
+                </li>
+                <li>تشفير البيانات أثناء تخزينها على الخوادم.</li>
+                <li>
+                  سياسات صلاحيات على مستوى الصف
+                  <span class="ltr">(Row-Level Security)</span> تمنع أي مستخدم
+                  من الوصول إلى بيانات مستخدم آخر.
+                </li>
+                <li>
+                  عدم تخزين كلمات المرور بشكل نصي — تُحفظ مشفّرة باتجاه واحد
+                  فقط.
+                </li>
+                <li>
+                  تقييد وصول فريق العمل إلى البيانات على أساس مبدأ "الحاجة إلى
+                  المعرفة" فقط.
+                </li>
+                <li>
+                  مراجعة دورية للصلاحيات والسجلات وتحديث المكتبات البرمجية لسدّ
+                  الثغرات.
+                </li>
+              </ul>
+              <p>
+                ومع ذلك، لا يوجد نظام إلكتروني آمن بنسبة 100%. نحن نبذل جهداً
+                معقولاً ومهنياً لحماية بياناتك، لكن لا يمكننا ضمان الأمان
+                المطلق. في حال وقوع خرق أمني يمسّ بياناتك الشخصية بشكل جوهري،
+                سنُعلمك وسنُبلغ الجهات المختصة دون تأخير غير مبرر.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                We apply technical and organisational measures to protect your
+                data, including:
+              </p>
+              <ul>
+                <li>
+                  Full encryption of traffic between the App and our servers
+                  over <span class="ltr">TLS/HTTPS</span>.
+                </li>
+                <li>Encryption of data at rest on our servers.</li>
+                <li>
+                  Row-Level Security policies that prevent any user from
+                  reaching another user's data.
+                </li>
+                <li>
+                  No plaintext password storage — passwords are stored as
+                  one-way hashes only.
+                </li>
+                <li>
+                  Staff access to data restricted strictly on a need-to-know
+                  basis.
+                </li>
+                <li>
+                  Periodic review of permissions and logs, and regular
+                  dependency updates to close vulnerabilities.
+                </li>
+              </ul>
+              <p>
+                That said, no electronic system is 100% secure. We make a
+                reasonable and professional effort to protect your data, but we
+                cannot guarantee absolute security. In the event of a breach
+                that materially affects your personal data, we will notify you
+                and the competent authorities without undue delay.
+              </p>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">05</span>
+              <h3>
+                <span data-lang="ar">حقوقك وتحكّمك</span
+                ><span data-lang="en">Your rights and control</span>
+              </h3>
+            </div>
+            <details class="acc" id="p10">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">10. حقوقك تجاه بياناتك</span
+              ><span data-lang="en">10. Your rights over your data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>تملك الحقوق التالية ويمكنك ممارستها بالتواصل معنا:</p>
+              <ul>
+                <li>
+                  <strong>حق الاطلاع:</strong> طلب نسخة من البيانات الشخصية التي
+                  نحتفظ بها عنك.
+                </li>
+                <li>
+                  <strong>حق التصحيح:</strong> تعديل أي بيانات غير دقيقة أو غير
+                  مكتملة — معظمها قابل للتعديل مباشرة من شاشة الملف الشخصي.
+                </li>
+                <li>
+                  <strong>حق الحذف:</strong> طلب حذف حسابك وبياناتك، ضمن حدود ما
+                  يفرضه القانون من احتفاظ.
+                </li>
+                <li>
+                  <strong>حق تقييد المعالجة:</strong> طلب إيقاف معالجة معينة
+                  مؤقتاً أثناء التحقق من نزاع.
+                </li>
+                <li>
+                  <strong>حق الاعتراض:</strong> الاعتراض على معالجة تستند إلى
+                  المصلحة المشروعة.
+                </li>
+                <li>
+                  <strong>حق نقل البيانات:</strong> استلام بياناتك بصيغة
+                  إلكترونية منظّمة وقابلة للقراءة آلياً.
+                </li>
+                <li>
+                  <strong>حق سحب الموافقة:</strong> سحب موافقتك على الموقع أو
+                  الإشعارات في أي وقت من إعدادات الهاتف، دون أن يؤثر ذلك على
+                  قانونية المعالجة السابقة.
+                </li>
+                <li>
+                  <strong>حق الشكوى:</strong> تقديم شكوى إلى الجهة الرقابية
+                  المختصة في الأردن إن رأيت أننا لم نحترم حقوقك.
+                </li>
+              </ul>
+              <p>
+                نرد على طلباتك خلال <strong>30 يوماً</strong> كحد أقصى. قد نطلب
+                منك إثبات هويتك قبل تنفيذ الطلب حمايةً لحسابك من انتحال الصفة.
+                ممارسة هذه الحقوق مجانية، إلا إذا كان الطلب متكرراً أو مبالغاً
+                فيه بشكل واضح.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                You hold the following rights and may exercise them by
+                contacting us:
+              </p>
+              <ul>
+                <li>
+                  <strong>Right of access:</strong> request a copy of the
+                  personal data we hold about you.
+                </li>
+                <li>
+                  <strong>Right to rectification:</strong> correct inaccurate or
+                  incomplete data — most of it is editable directly from the
+                  profile screen.
+                </li>
+                <li>
+                  <strong>Right to erasure:</strong> request deletion of your
+                  account and data, within the limits of legally mandated
+                  retention.
+                </li>
+                <li>
+                  <strong>Right to restrict processing:</strong> ask us to pause
+                  a particular processing activity while a dispute is
+                  investigated.
+                </li>
+                <li>
+                  <strong>Right to object:</strong> object to processing that
+                  relies on legitimate interest.
+                </li>
+                <li>
+                  <strong>Right to data portability:</strong> receive your data
+                  in a structured, machine-readable electronic format.
+                </li>
+                <li>
+                  <strong>Right to withdraw consent:</strong> withdraw location
+                  or notification consent at any time from your phone settings,
+                  without affecting the lawfulness of prior processing.
+                </li>
+                <li>
+                  <strong>Right to complain:</strong> lodge a complaint with the
+                  competent supervisory authority in Jordan if you believe we
+                  have not respected your rights.
+                </li>
+              </ul>
+              <p>
+                We respond to requests within a maximum of
+                <strong>30 days</strong>. We may ask you to verify your identity
+                before acting, to protect your account from impersonation.
+                Exercising these rights is free of charge, unless a request is
+                clearly repetitive or excessive.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p11">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">11. حذف الحساب والبيانات</span
+              ><span data-lang="en">11. Account and data deletion</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>يمكنك طلب حذف حسابك بإحدى طريقتين:</p>
+              <ul>
+                <li>
+                  من داخل التطبيق:
+                  <em>الملف الشخصي ← الإعدادات ← حذف الحساب</em>.
+                </li>
+                <li>
+                  أو بمراسلتنا على البريد الإلكتروني الموضّح في
+                  <a href="#p21">القسم 21</a> من نفس البريد أو الرقم المسجّل في
+                  حسابك.
+                </li>
+              </ul>
+              <p><strong>ما يحدث بعد الطلب:</strong></p>
+              <ul>
+                <li>يُعطّل الحساب فوراً ولا يعود بإمكانك تسجيل الدخول.</li>
+                <li>
+                  تُحذف بياناتك الشخصية (الاسم، الهاتف، البريد، الصورة، العناوين
+                  المحفوظة) خلال 30 يوماً.
+                </li>
+                <li>
+                  تبقى السجلات المالية المرتبطة برحلات مكتملة للمدة التي يفرضها
+                  القانون، مع فصل هويتك عنها قدر الإمكان.
+                </li>
+                <li>
+                  إن كان لديك رحلة نشطة أو مبلغ مستحق، يُنفّذ الحذف بعد تسوية
+                  ذلك.
+                </li>
+              </ul>
+              <p>
+                الحذف نهائي ولا يمكن التراجع عنه — لن نتمكن من استعادة سجل
+                رحلاتك بعد تنفيذه.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>You can request account deletion in one of two ways:</p>
+              <ul>
+                <li>
+                  From inside the App:
+                  <em>Profile → Settings → Delete account</em>.
+                </li>
+                <li>
+                  Or by emailing us at the address in
+                  <a href="#p21">Section 21</a>, from the same email or phone
+                  number registered on your account.
+                </li>
+              </ul>
+              <p><strong>What happens after the request:</strong></p>
+              <ul>
+                <li>
+                  The account is disabled immediately and you can no longer sign
+                  in.
+                </li>
+                <li>
+                  Your personal data (name, phone, email, photo, saved
+                  addresses) is deleted within 30 days.
+                </li>
+                <li>
+                  Financial records tied to completed trips remain for the
+                  period the law requires, decoupled from your identity as far
+                  as possible.
+                </li>
+                <li>
+                  If you have an active trip or an outstanding balance, deletion
+                  runs after that is settled.
+                </li>
+              </ul>
+              <p>
+                Deletion is permanent and cannot be undone — we will not be able
+                to restore your trip history afterwards.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p12">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">12. أذونات التطبيق ولماذا نطلبها</span
+              ><span data-lang="en">12. App permissions and why we ask</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <ul>
+                <li>
+                  <strong>الموقع الجغرافي:</strong> لتحديد نقطة الانطلاق، وعرض
+                  السائقين القريبين، وتتبّع الرحلة. بدونه يمكنك إدخال العنوان
+                  يدوياً.
+                </li>
+                <li>
+                  <strong>الموقع في الخلفية (للسائقين فقط):</strong> لاستمرار
+                  التتبّع أثناء الرحلة حتى لو كان التطبيق مغلقاً على الشاشة.
+                </li>
+                <li>
+                  <strong>الإشعارات:</strong> لإعلامك بقبول الطلب ووصول السائق
+                  وانتهاء الرحلة.
+                </li>
+                <li>
+                  <strong>الكاميرا:</strong> لالتقاط صورة الملف الشخصي، ولصور
+                  إثبات التسليم لدى السائقين.
+                </li>
+                <li>
+                  <strong>معرض الصور:</strong> لاختيار صورة ملفك الشخصي فقط — لا
+                  نقرأ باقي صورك.
+                </li>
+                <li>
+                  <strong>الاتصال بالإنترنت:</strong> ضروري لعمل التطبيق
+                  بالكامل.
+                </li>
+              </ul>
+              <p>
+                جميع الأذونات اختيارية على مستوى النظام، ويمكنك سحب أي منها
+                لاحقاً من إعدادات الهاتف — مع العلم أن سحب بعضها قد يعطّل وظائف
+                أساسية في التطبيق.
+              </p>
+            </div>
+            <div data-lang="en">
+              <ul>
+                <li>
+                  <strong>Location:</strong> to set your pickup point, show
+                  nearby drivers, and track the trip. Without it you can enter
+                  addresses manually.
+                </li>
+                <li>
+                  <strong>Background location (drivers only):</strong> to keep
+                  tracking during an active trip even when the App is not on
+                  screen.
+                </li>
+                <li>
+                  <strong>Notifications:</strong> to tell you when an order is
+                  accepted, the driver arrives, and the trip ends.
+                </li>
+                <li>
+                  <strong>Camera:</strong> to take a profile photo, and for
+                  proof-of-delivery photos on the driver side.
+                </li>
+                <li>
+                  <strong>Photo library:</strong> only to pick your profile
+                  picture — we do not read your other photos.
+                </li>
+                <li>
+                  <strong>Internet access:</strong> required for the App to
+                  function at all.
+                </li>
+              </ul>
+              <p>
+                All permissions are optional at the system level and can be
+                revoked later from your phone settings — though revoking some
+                will disable core functionality in the App.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p13">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">13. الإشعارات</span
+              ><span data-lang="en">13. Notifications</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>نرسل نوعين من الإشعارات:</p>
+              <ul>
+                <li>
+                  <strong>إشعارات تشغيلية:</strong> مرتبطة مباشرة بطلبك — قبول
+                  السائق، وصوله، بدء الرحلة، إتمام التسليم. هذه ضرورية لعمل
+                  الخدمة.
+                </li>
+                <li>
+                  <strong>إشعارات ترويجية:</strong> عروض أو تحديثات على الخدمة.
+                  يمكنك إيقافها من إعدادات التطبيق دون التأثير على الإشعارات
+                  التشغيلية.
+                </li>
+              </ul>
+              <p>
+                يُستخدم معرّف الإشعارات (Push Token) لهذا الغرض فقط، ويُحذف عند
+                تسجيل خروجك أو حذف حسابك أو إلغاء تثبيت التطبيق.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>We send two kinds of notifications:</p>
+              <ul>
+                <li>
+                  <strong>Operational notifications:</strong> tied directly to
+                  your order — driver accepted, driver arrived, trip started,
+                  delivery completed. These are necessary for the service to
+                  work.
+                </li>
+                <li>
+                  <strong>Promotional notifications:</strong> offers or service
+                  updates. You can turn these off in the App settings without
+                  affecting operational alerts.
+                </li>
+              </ul>
+              <p>
+                The push token is used for this purpose only, and is deleted
+                when you sign out, delete your account, or uninstall the App.
+              </p>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">06</span>
+              <h3>
+                <span data-lang="ar">تفاصيل خاصة بالخدمة</span
+                ><span data-lang="en">Service-specific details</span>
+              </h3>
+            </div>
+            <details class="acc" id="p14">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">14. صور إثبات التسليم</span
+              ><span data-lang="en">14. Proof-of-delivery photos</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                في خدمة توصيل الطرود، قد يلتقط السائق صورة عند التسليم لتوثيق
+                وصول الطرد وحمايةً للطرفين من النزاع.
+              </p>
+              <ul>
+                <li>
+                  تُلتقط الصورة للطرد أو مكان تسليمه — لا يُطلب من السائق تصوير
+                  الأشخاص.
+                </li>
+                <li>
+                  تُخزّن الصورة بشكل آمن ومرتبطة بالطلب فقط، ولا تظهر لأي مستخدم
+                  آخر خارج أطراف الطلب.
+                </li>
+                <li>تُحذف تلقائياً بعد 90 يوماً من التسليم.</li>
+                <li>يمكنك طلب حذف صورة تخصّ طلبك مبكراً بمراسلتنا.</li>
+              </ul>
+            </div>
+            <div data-lang="en">
+              <p>
+                In the parcel delivery service, a driver may take a photo at
+                drop-off to document that the parcel arrived and protect both
+                sides from disputes.
+              </p>
+              <ul>
+                <li>
+                  The photo captures the parcel or the drop-off location —
+                  drivers are not asked to photograph people.
+                </li>
+                <li>
+                  It is stored securely, linked only to that order, and is not
+                  visible to any user outside the parties to the order.
+                </li>
+                <li>It is deleted automatically 90 days after delivery.</li>
+                <li>
+                  You can request early deletion of a photo relating to your
+                  order by contacting us.
+                </li>
+              </ul>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p15">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">15. بيانات السائقين</span
+              ><span data-lang="en">15. Driver data</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                إضافة إلى ما سبق، نجمع من السائقين المسجّلين بيانات إضافية
+                ضرورية للتحقق والتشغيل:
+              </p>
+              <ul>
+                <li>
+                  رخصة القيادة، ورخصة المركبة، ورقم اللوحة، ونوع المركبة
+                  وموديلها ولونها.
+                </li>
+                <li>صورة شخصية واضحة تُعرض للراكب للتحقق من هوية السائق.</li>
+                <li>الوثائق المطلوبة للتحقق من الأهلية للعمل على المنصة.</li>
+                <li>
+                  بيانات الأداء: عدد الرحلات، معدل القبول والإلغاء، والتقييم
+                  العام.
+                </li>
+                <li>
+                  بيانات الموقع أثناء وضع الاتصال كما هو موضّح في
+                  <a href="#p3">القسم 3</a>.
+                </li>
+              </ul>
+              <p>
+                تُستخدم هذه البيانات للتحقق من السائق، ومطابقته مع الطلبات،
+                وحساب مستحقاته، والتعامل مع الشكاوى. تظهر للراكب فقط البيانات
+                اللازمة للتعرّف على المركبة والسائق — لا تُعرض وثائق السائق
+                الرسمية لأي راكب.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                In addition to the above, we collect extra data from registered
+                drivers that is necessary for verification and operations:
+              </p>
+              <ul>
+                <li>
+                  Driving licence, vehicle registration, plate number, and
+                  vehicle type, model, and colour.
+                </li>
+                <li>
+                  A clear profile photo, shown to passengers so they can verify
+                  the driver's identity.
+                </li>
+                <li>
+                  Documents required to verify eligibility to work on the
+                  platform.
+                </li>
+                <li>
+                  Performance data: number of trips, acceptance and cancellation
+                  rates, and overall rating.
+                </li>
+                <li>
+                  Location data while Online, as described in
+                  <a href="#p3">Section 3</a>.
+                </li>
+              </ul>
+              <p>
+                This data is used to verify the driver, match them to orders,
+                calculate their earnings, and handle complaints. Passengers only
+                see the data needed to identify the vehicle and driver — a
+                driver's official documents are never shown to any passenger.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p16">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">16. المدفوعات</span
+              ><span data-lang="en">16. Payments</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                تتم المدفوعات حالياً نقداً مباشرة بين الراكب والسائق عند انتهاء
+                الرحلة. نحن نسجّل قيمة الأجرة وحالة الدفع فقط لأغراض المحاسبة
+                وحل النزاعات.
+              </p>
+              <p>
+                في حال إضافة الدفع الإلكتروني مستقبلاً، ستتم معالجة بيانات
+                البطاقة عبر مزوّد دفع مرخّص ومتوافق مع معيار
+                <span class="ltr">PCI-DSS</span>، ولن نخزّن أرقام البطاقات على
+                خوادمنا في أي حال. سنحدّث هذه السياسة ونعلمك قبل تفعيل أي وسيلة
+                دفع جديدة.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                Payments are currently made in cash directly between passenger
+                and driver at the end of a trip. We record only the fare amount
+                and payment status, for accounting and dispute resolution.
+              </p>
+              <p>
+                If electronic payment is added in future, card data will be
+                handled by a licensed,
+                <span class="ltr">PCI-DSS</span>-compliant payment provider, and
+                card numbers will never be stored on our servers under any
+                circumstances. We will update this policy and notify you before
+                enabling any new payment method.
+              </p>
+            </div>
+              </div>
+            </details>
+            <div class="pgroup">
+              <span class="pgroup-n">07</span>
+              <h3>
+                <span data-lang="ar">أحكام عامة</span
+                ><span data-lang="en">General provisions</span>
+              </h3>
+            </div>
+            <details class="acc" id="p17">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">17. خصوصية الأطفال</span
+              ><span data-lang="en">17. Children's privacy</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                الخدمة غير موجّهة لمن هم دون سن <strong>18 عاماً</strong>، ولا
+                نجمع بيانات عن قصد من الأطفال. إن اكتشفنا أن حساباً أُنشئ من
+                قِبل قاصر دون موافقة ولي الأمر، سنقوم بتعطيل الحساب وحذف
+                بياناته.
+              </p>
+              <p>
+                إن كنت ولي أمر وتعتقد أن طفلك زوّدنا ببيانات شخصية، تواصل معنا
+                وسنتصرّف فوراً.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                The service is not directed at anyone under
+                <strong>18 years old</strong>, and we do not knowingly collect
+                data from children. If we discover an account was created by a
+                minor without parental consent, we will disable it and delete
+                its data.
+              </p>
+              <p>
+                If you are a parent or guardian and believe your child has
+                provided us with personal data, contact us and we will act
+                immediately.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p18">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">18. النقل الدولي للبيانات</span
+              ><span data-lang="en">18. International data transfers</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                قد تُخزَّن أو تُعالَج بعض بياناتك على خوادم لمزوّدي خدمة موجودة
+                خارج الأردن، لأن البنية التحتية السحابية التي نعتمد عليها عالمية
+                بطبيعتها.
+              </p>
+              <p>
+                في كل الأحوال، نتعامل فقط مع مزوّدين يلتزمون بمعايير حماية
+                بيانات معترف بها دولياً، ويُلزمون تعاقدياً بحماية بياناتك بنفس
+                مستوى الحماية الموضّح في هذه السياسة.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                Some of your data may be stored or processed on servers
+                belonging to service providers located outside Jordan, because
+                the cloud infrastructure we rely on is global by nature.
+              </p>
+              <p>
+                In all cases we work only with providers that adhere to
+                internationally recognised data-protection standards and are
+                contractually bound to protect your data to the same standard
+                set out in this policy.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p19">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">19. ملفات الارتباط وتقنيات التتبّع</span
+              ><span data-lang="en">19. Cookies and tracking technologies</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                التطبيق نفسه لا يستخدم ملفات ارتباط بالمعنى المعروف في
+                المتصفحات، لكنه يستخدم مساحة تخزين محلية على جهازك للاحتفاظ
+                بجلسة تسجيل دخولك وتفضيلاتك (مثل اللغة) حتى لا تضطر لتسجيل
+                الدخول في كل مرة.
+              </p>
+              <p>
+                هذا الموقع الإلكتروني صفحة تعريفية ثابتة، ولا يضع ملفات ارتباط
+                تتبّعية ولا يشغّل أدوات تحليل سلوك الزوار أو إعلانات موجّهة.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                The App itself does not use cookies in the browser sense, but it
+                does use local storage on your device to keep your sign-in
+                session and preferences (such as language) so you don't have to
+                sign in every time.
+              </p>
+              <p>
+                This website is a static informational page. It sets no tracking
+                cookies and runs no behavioural analytics or targeted
+                advertising tools.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p20">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">20. تغييرات على هذه السياسة</span
+              ><span data-lang="en">20. Changes to this policy</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                قد نحدّث هذه السياسة من وقت لآخر لتعكس تغييرات في الخدمة أو في
+                المتطلبات القانونية. عند حدوث تغيير جوهري:
+              </p>
+              <ul>
+                <li>نُحدّث تاريخ "آخر تحديث" أعلى هذه الصفحة.</li>
+                <li>ننشر النسخة الجديدة هنا قبل سريانها.</li>
+                <li>
+                  نُعلمك داخل التطبيق أو عبر إشعار إن كان التغيير يمسّ حقوقك
+                  بشكل جوهري.
+                </li>
+              </ul>
+              <p>
+                استمرارك في استخدام التطبيق بعد سريان النسخة المحدّثة يُعدّ
+                قبولاً بها. ننصحك بمراجعة هذه الصفحة بين حين وآخر.
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                We may update this policy from time to time to reflect changes
+                in the service or in legal requirements. When a material change
+                occurs:
+              </p>
+              <ul>
+                <li>
+                  We update the "Last updated" date at the top of this page.
+                </li>
+                <li>We publish the new version here before it takes effect.</li>
+                <li>
+                  We notify you in-app or by notification if the change
+                  materially affects your rights.
+                </li>
+              </ul>
+              <p>
+                Continuing to use the App after the updated version takes effect
+                constitutes acceptance of it. We recommend reviewing this page
+                periodically.
+              </p>
+            </div>
+              </div>
+            </details>
+            <details class="acc" id="p21">
+              <summary>
+                <span class="acc-t"><span data-lang="ar">21. كيفية التواصل معنا</span
+              ><span data-lang="en">21. How to contact us</span></span>
+                <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="acc-body">
+<div data-lang="ar">
+              <p>
+                لأي سؤال أو طلب متعلق بالخصوصية أو بياناتك الشخصية — بما في ذلك
+                طلبات الاطلاع أو التصحيح أو الحذف — تواصل معنا عبر:
+              </p>
+            </div>
+            <div data-lang="en">
+              <p>
+                For any question or request relating to privacy or your personal
+                data — including access, correction, or deletion requests —
+                contact us via:
+              </p>
+            </div>
+
+            <div class="note">
+              <p data-lang="ar">
+                لحذف حسابك أو طلب محو بياناتك، اتبع الخطوات الموضّحة في صفحة
+                <a href="./delete-account.html">حذف الحساب والبيانات</a>.
+              </p>
+              <p data-lang="en">
+                To delete your account or request erasure of your data, follow
+                the steps on the
+                <a href="./delete-account.html">Account &amp; Data Deletion</a>
+                page.
+              </p>
+            </div>
+
+            <div class="contact-grid">
+              <div class="contact-card">
+                <div class="k">
+                  <span data-lang="ar">البريد الإلكتروني</span
+                  ><span data-lang="en">Email</span>
+                </div>
+                <a class="v ltr" href="mailto:shahinamman11@gmail.com"
+                  >shahinamman11@gmail.com</a
+                >
+              </div>
+              <div class="contact-card">
+                <div class="k">
+                  <span data-lang="ar">الهاتف / واتساب</span
+                  ><span data-lang="en">Phone / WhatsApp</span>
+                </div>
+                <a class="v ltr" href="tel:+962785557277">+962 77 000 0000</a>
+              </div>
+              <div class="contact-card">
+                <div class="k">
+                  <span data-lang="ar">مدة الرد</span
+                  ><span data-lang="en">Response time</span>
+                </div>
+                <div class="v">
+                  <span data-lang="ar">حتى 30 يوماً</span
+                  ><span data-lang="en">Up to 30 days</span>
+                </div>
+              </div>
+            </div>
+              </div>
+            </details>
+
+            <div class="note" style="margin-top: 32px">
+              <p data-lang="ar">
+                هذه السياسة مكتوبة بالعربية والإنجليزية. في حال وجود أي اختلاف
+                في التفسير بين النسختين، تكون النسخة العربية هي المعتمدة.
+              </p>
+              <p data-lang="en">
+                This policy is published in Arabic and English. In case of any
+                discrepancy in interpretation between the two versions, the
+                Arabic version prevails.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="soft">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">
+              <span data-lang="ar">تواصل معنا</span
+              ><span data-lang="en">Contact</span>
+            </div>
+            <div data-lang="ar">
+              <h2>نحن هنا للمساعدة</h2>
+              <p>
+                سؤال، اقتراح، أو مشكلة في رحلة؟ راسلنا وسنرد عليك بأسرع وقت
+                ممكن.
+              </p>
+            </div>
+            <div data-lang="en">
+              <h2>We're here to help</h2>
+              <p>
+                A question, a suggestion, or an issue with a trip? Reach out and
+                we'll get back to you as soon as we can.
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-grid" style="margin-top: 0">
+            <div class="contact-card">
+              <div class="k">
+                <span data-lang="ar">البريد الإلكتروني</span
+                ><span data-lang="en">Email</span>
+              </div>
+              <a class="v ltr" href="mailto:shahinamman11@gmail.com"
+                >shahinamman11@gmail.com</a
+              >
+            </div>
+            <div class="contact-card">
+              <div class="k">
+                <span data-lang="ar">اتصل بنا</span
+                ><span data-lang="en">Call us</span>
+              </div>
+              <a class="v ltr" href="tel:+962785557277">+962 77 000 0000</a>
+            </div>
+            <div class="contact-card">
+              <div class="k">
+                <span data-lang="ar">الموقع</span
+                ><span data-lang="en">Location</span>
+              </div>
+              <div class="v">
+                <span data-lang="ar">عمّان، الأردن</span
+                ><span data-lang="en">Amman, Jordan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="fgrid">
+          <div>
+            <div class="brand">
+              <span class="logo" aria-hidden="true">
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M14 17h1a2 2 0 0 0 2-2V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h1"
+                  />
+                  <path
+                    d="M17 9h2.6a1 1 0 0 1 .82.43L22 12v3a2 2 0 0 1-2 2h-1"
+                  />
+                  <circle cx="7.5" cy="17.5" r="2" />
+                  <circle cx="16.5" cy="17.5" r="2" />
+                </svg>
+              </span>
+              <span data-lang="ar">عمان جو اكسبرس</span>
+              <span data-lang="en">Amman Jo Express</span>
+            </div>
+            <p data-lang="ar">
+              تطبيق أردني للمشاوير وتوصيل الطرود — بسيط، سريع، وواضح في أسعاره.
+            </p>
+            <p data-lang="en">
+              A Jordanian app for rides and parcel delivery — simple, fast, and
+              clear on price.
+            </p>
+          </div>
+          <nav>
+            <a href="#features"
+              ><span data-lang="ar">المميزات</span
+              ><span data-lang="en">Features</span></a
+            >
+            <a href="#how"
+              ><span data-lang="ar">كيف يعمل</span
+              ><span data-lang="en">How it works</span></a
+            >
+            <a href="#privacy"
+              ><span data-lang="ar">سياسة الخصوصية</span
+              ><span data-lang="en">Privacy Policy</span></a
+            >
+            <a href="mailto:shahinamman11@gmail.com"
+              ><span data-lang="ar">الدعم</span
+              ><span data-lang="en">Support</span></a
+            >
+          </nav>
+        </div>
+        <div class="fbottom">
+          <span
+            >© <span id="yr">2026</span>
+            <span data-lang="ar">عمان جو اكسبرس. جميع الحقوق محفوظة.</span
+            ><span data-lang="en"
+              >Amman Jo Express. All rights reserved.</span
+            ></span
+          >
+          <span class="ltr">shahinamman11@gmail.com · +962 77 000 0000</span>
+          <span class="devby">
+            <span data-lang="ar">تطوير</span
+            ><span data-lang="en">Developed by</span>
+            <a href="http://direct-code.com/" target="_blank" rel="noopener"
+              >Direct Code</a
+            >
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function applyLang(lang) {
+        var html = document.documentElement;
+        html.lang = lang;
+        html.dir = lang === "ar" ? "rtl" : "ltr";
+        try {
+          localStorage.setItem("aje-lang", lang);
+        } catch (e) {}
+      }
+      function toggleLang() {
+        applyLang(document.documentElement.lang === "ar" ? "en" : "ar");
+      }
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem("aje-lang");
+        } catch (e) {}
+        applyLang(saved || "ar");
+        document.getElementById("yr").textContent = new Date().getFullYear();
+      })();
+
+      /* ---- privacy accordion ---- */
+      (function () {
+        var items = document.querySelectorAll("details.acc");
+
+        document.querySelectorAll(".acc-ctl").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var open = btn.dataset.acc === "open";
+            items.forEach(function (d) {
+              d.open = open;
+            });
+          });
+        });
+
+        /* a link to #p7 must open that section, not scroll to a closed box */
+        function openTarget(hash) {
+          if (!hash) return;
+          var el = document.querySelector(hash);
+          if (el && el.tagName === "DETAILS") {
+            el.open = true;
+            el.scrollIntoView({ block: "start", behavior: "smooth" });
+          }
+        }
+        document.querySelectorAll('a[href^="#p"]').forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            var h = a.getAttribute("href");
+            history.replaceState(null, "", h);
+            openTarget(h);
+          });
+        });
+        openTarget(location.hash);
+      })();
+    </script>
+  </body>
+</html>

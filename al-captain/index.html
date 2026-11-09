@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Al-Captain — Your Ride, Your Rules</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 50%, #0d1b3e 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 64px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+      bottom: -50px; left: 10%;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text .section-tag { background: rgba(249,115,22,0.15); }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero-text h1 .accent { color: var(--accent); }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 36px;
+      max-width: 420px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .badge::before { content: "✓"; color: var(--accent); font-size: 0.8rem; }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-mockup {
+      width: 260px;
+      height: 520px;
+      background: linear-gradient(160deg, #1e2233, #0f1220);
+      border-radius: 40px;
+      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      gap: 14px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 3px;
+      margin: 0 auto 6px;
+    }
+
+    .phone-map {
+      flex: 1;
+      background: linear-gradient(135deg, #1a2a4a, #0f1e35);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated map grid */
+    .phone-map::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(249,115,22,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249,115,22,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .map-pin {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(249,115,22,0.25), 0 0 0 8px rgba(249,115,22,0.1);
+      animation: pulse 2s infinite;
+    }
+    .map-pin.a { top: 35%; left: 30%; }
+    .map-pin.b { bottom: 30%; right: 28%; background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74,222,128,0.25); animation-delay: 1s; }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(249,115,22,0.3), 0 0 0 10px rgba(249,115,22,0.1); }
+      50%       { box-shadow: 0 0 0 6px rgba(249,115,22,0.15), 0 0 0 14px rgba(249,115,22,0.05); }
+    }
+
+    .map-car {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.4rem;
+      animation: drive 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes drive {
+      from { transform: translate(-60%, -50%); }
+      to   { transform: translate(-40%, -60%); }
+    }
+
+    .phone-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .phone-card-label {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .phone-card-value {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .phone-card-sub {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── Stats ── */
+    .stats-section {
+      background: var(--navy);
+      padding: 60px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px 24px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+    }
+
+    /* ── Services ── */
+    .services-section { background: var(--light); }
+
+    /* ── How It Works ── */
+    .how-section { background: var(--white); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: "";
+      position: absolute;
+      top: 26px;
+      left: calc(12.5% + 12px);
+      right: calc(12.5% + 12px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), rgba(249,115,22,0.2));
+      z-index: 0;
+    }
+
+    body[dir="rtl"] .steps-grid::before {
+      background: linear-gradient(270deg, var(--accent), rgba(249,115,22,0.2));
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 52px; height: 52px;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 16px rgba(249,115,22,0.4);
+    }
+
+    .step h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    .step p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--navy) 100%);
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .cta-section .section-tag { background: rgba(249,115,22,0.2); }
+
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 36px;
+      font-size: 1rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .hero-text p { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-badges { justify-content: center; }
+      .hero-visual { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+      .steps-grid::before { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Al<span>-</span>Captain</a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+      <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn" onclick="toggleLang()">العربية</button>
+      <div class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- mobile nav -->
+<div class="mobile-nav">
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="about.html" data-i18n="nav.about">About Us</a>
+  <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
+  <a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a>
+</div>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="section-tag" data-i18n="hero.tag">The Smarter Way to Ride</span>
+      <h1 data-i18n="hero.title">Your Ride,<br>Your Rules</h1>
+      <p data-i18n="hero.sub">Al-Captain connects passengers with verified drivers for safe, reliable trips — anytime, anywhere.</p>
+      <div class="hero-actions">
+        <a href="about.html" class="btn btn-primary" data-i18n="hero.cta1">Get Started</a>
+        <a href="#services" class="btn btn-outline" data-i18n="hero.cta2">Learn More</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge" data-i18n="hero.badge1">Verified Drivers</span>
+        <span class="badge" data-i18n="hero.badge2">Real-time Tracking</span>
+        <span class="badge" data-i18n="hero.badge3">Secure &amp; Fast</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-map">
+          <div class="map-pin a"></div>
+          <div class="map-pin b"></div>
+          <div class="map-car">🚗</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-label">Your Driver</div>
+          <div class="phone-card-value">Ahmed K. ⭐ 4.9</div>
+          <div class="phone-card-sub">Arriving in 3 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STATS ════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" data-count="50000" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stats.rides">Rides Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="1200" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stats.drivers">Active Drivers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="15" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stats.cities">Cities Covered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="4.8" data-suffix="★">0</div>
+        <div class="stat-label" data-i18n="stats.rating">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SERVICES ════ -->
+<section id="services" class="section services-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag" data-i18n="services.tag">What We Offer</span>
+      <h2 class="section-title" data-i18n="services.title">Everything you need<br>for a great ride</h2>
+      <p class="section-sub" data-i18n="services.sub">From instant booking to real-time tracking, we&#x27;ve built every feature with your comfort in mind.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-icon">⚡</div>
+        <h3 data-i18n="s1.title">Instant Booking</h3>
+        <p data-i18n="s1.desc">Book a ride in seconds. No waiting, no hassle — just tap and go.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📍</div>
+        <h3 data-i18n="s2.title">Real-time Tracking</h3>
+        <p data-i18n="s2.desc">Track your driver live on the map from pickup to drop-off.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">✅</div>
+        <h3 data-i18n="s3.title">Verified Drivers</h3>
+        <p data-i18n="s3.desc">Every driver is background-checked and rated by the community.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📅</div>
+        <h3 data-i18n="s4.title">Flexible Plans</h3>
+        <p data-i18n="s4.desc">Daily, weekly, monthly, or yearly subscriptions — choose what fits you.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">💬</div>
+        <h3 data-i18n="s5.title">In-app Chat</h3>
+        <p data-i18n="s5.desc">Communicate with your driver directly within the app, safely and easily.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🔒</div>
+        <h3 data-i18n="s6.title">Secure Payments</h3>
+        <p data-i18n="s6.desc">All transactions are encrypted and processed through trusted providers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ HOW IT WORKS ════ -->
+<section class="section how-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag" data-i18n="how.tag">How It Works</span>
+      <h2 class="section-title" data-i18n="how.title">Up and running<br>in 4 simple steps</h2>
+      <p class="section-sub" data-i18n="how.sub">Getting started with Al-Captain takes less than two minutes.</p>
+    </div>
+
+    <div class="steps-grid reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3 data-i18n="h1.title">Create Your Account</h3>
+        <p data-i18n="h1.desc">Sign up with your phone number or Google/Apple account.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3 data-i18n="h2.title">Book a Ride</h3>
+        <p data-i18n="h2.desc">Set your pickup and destination, choose your ride, confirm.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3 data-i18n="h3.title">Track in Real-time</h3>
+        <p data-i18n="h3.desc">Watch your driver approach on a live map.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3 data-i18n="h4.title">Reach Your Destination</h3>
+        <p data-i18n="h4.desc">Arrive safely and rate your experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="cta-section">
+  <div class="container">
+    <span class="section-tag" data-i18n="cta.tag">Ready to Ride?</span>
+    <h2 data-i18n="cta.title">Download Al-Captain Today</h2>
+    <p data-i18n="cta.sub">Available on iOS and Android. Join thousands of happy passengers.</p>
+    <a href="#" class="btn btn-primary" data-i18n="cta.btn">Get the App</a>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">Al<span>-</span>Captain</div>
+        <p data-i18n="footer.tagline">Connecting passengers with trusted drivers across the region.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.pages">Pages</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+          <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contact</h4>
+        <ul>
+          <li><a href="mailto:abdullah.asoully@gmail.com">abdullah.asoully@gmail.com</a></li>
+          <li><a href="#">Assoli Industries</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.copy">© 2026 Assoli Industries. All rights reserved.</span>
+      <span data-i18n="footer.built">Built with ♥</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>حذف الحساب والبيانات — جو اكسبرس | Delete Account — Jo Express</title>
+    <meta
+      name="description"
+      content="كيفية حذف حسابك وبياناتك في تطبيق جو اكسبرس. How to delete your Jo Express account and associated data."
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue-50: #eff6ff;
+        --blue-600: #2563eb;
+        --blue-700: #1d4ed8;
+        --blue-900: #1e3a8a;
+        --ink: #0f172a;
+        --body: #475569;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --bg: #ffffff;
+        --bg-soft: #f8fafc;
+        --card: #ffffff;
+        --amber-50: #fffbeb;
+        --amber-600: #d97706;
+        --radius: 16px;
+        --shadow:
+          0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+        --font: "Cairo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --maxw: 820px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f1f5f9;
+          --body: #cbd5e1;
+          --muted: #94a3b8;
+          --line: #1e293b;
+          --bg: #0b1220;
+          --bg-soft: #0f172a;
+          --card: #111c31;
+          --blue-50: #0f2547;
+          --amber-50: #2a1f06;
+          --shadow:
+            0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--body);
+        background: var(--bg);
+        line-height: 1.85;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- language switching (same contract as index.html) ---------- */
+      [data-lang] {
+        display: none;
+      }
+      html[lang="ar"] [data-lang="ar"] {
+        display: block;
+      }
+      html[lang="en"] [data-lang="en"] {
+        display: block;
+      }
+      span[data-lang],
+      a[data-lang],
+      strong[data-lang],
+      li[data-lang] {
+        display: none;
+      }
+      html[lang="ar"] span[data-lang="ar"],
+      html[lang="ar"] a[data-lang="ar"],
+      html[lang="ar"] strong[data-lang="ar"] {
+        display: inline;
+      }
+      html[lang="en"] span[data-lang="en"],
+      html[lang="en"] a[data-lang="en"],
+      html[lang="en"] strong[data-lang="en"] {
+        display: inline;
+      }
+      html[lang="ar"] li[data-lang="ar"],
+      html[lang="en"] li[data-lang="en"] {
+        display: list-item;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .bar {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 16px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .brand {
+        font-weight: 800;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 1.05rem;
+      }
+
+      .lang-btn {
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      main {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 48px 22px 80px;
+      }
+
+      h1 {
+        color: var(--ink);
+        font-size: clamp(1.7rem, 4vw, 2.3rem);
+        line-height: 1.35;
+        margin: 0 0 10px;
+      }
+
+      h2 {
+        color: var(--ink);
+        font-size: 1.2rem;
+        margin: 42px 0 14px;
+      }
+
+      .lede {
+        color: var(--muted);
+        font-size: 1.02rem;
+        margin: 0 0 8px;
+      }
+
+      .app-id {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: var(--muted);
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 5px 12px;
+        margin-top: 10px;
+        direction: ltr;
+      }
+
+      ol.steps {
+        padding-inline-start: 22px;
+        margin: 0;
+      }
+
+      ol.steps > li {
+        margin-bottom: 14px;
+      }
+
+      .note {
+        background: var(--blue-50);
+        border: 1px solid color-mix(in srgb, var(--blue-600) 22%, transparent);
+        border-inline-start: 4px solid var(--blue-600);
+        border-radius: 12px;
+        padding: 18px 22px;
+        margin: 26px 0;
+      }
+
+      .note p {
+        margin: 0;
+      }
+
+      .warn {
+        background: var(--amber-50);
+        border: 1px solid color-mix(in srgb, var(--amber-600) 30%, transparent);
+        border-inline-start: 4px solid var(--amber-600);
+        border-radius: 12px;
+        padding: 18px 22px;
+        margin: 26px 0;
+      }
+
+      .warn p {
+        margin: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        font-size: 0.95rem;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 12px 14px;
+        text-align: start;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--bg-soft);
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .contact-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        margin-top: 20px;
+      }
+
+      .contact-card .k {
+        color: var(--muted);
+        font-size: 0.86rem;
+        margin-bottom: 4px;
+      }
+
+      .contact-card .v {
+        color: var(--blue-600);
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.02rem;
+      }
+
+      .ltr {
+        direction: ltr;
+        display: inline-block;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 26px 22px 40px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      footer a {
+        color: var(--blue-600);
+      }
+    
+      .request-box{margin:28px 0;padding:22px;border:1px solid #93c5fd;border-radius:14px;background:var(--bg-soft)}
+      .request-box h2{margin-top:0}.request-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+      .request-actions>a{display:block;padding:12px 16px;border-radius:9px;background:#1d4ed8;color:#fff;text-align:center;font-weight:700}
+      .request-box a{overflow-wrap:anywhere}.request-box p{margin-bottom:12px}
+      @media(max-width:600px){.request-actions{grid-template-columns:1fr}.request-box{padding:18px}}
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="bar">
+        <a class="brand" href="./">
+          <span data-lang="ar">جو اكسبرس</span>
+          <span data-lang="en">Jo Express</span>
+        </a>
+        <button
+          class="lang-btn"
+          id="langBtn"
+          type="button"
+          onclick="toggleLang()"
+        >
+          <span data-lang="ar">English</span><span data-lang="en">العربية</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div data-lang="ar">
+        <h1>حذف الحساب والبيانات</h1>
+        <p class="lede">
+          هذه الصفحة تشرح كيف تطلب حذف حسابك والبيانات المرتبطة به في تطبيق
+          <strong>جو اكسبرس</strong>.
+        </p>
+      </div>
+      <div data-lang="en">
+        <h1>Account &amp; Data Deletion</h1>
+        <p class="lede">
+          This page explains how to request deletion of your account and its
+          associated data in the <strong>Jo Express</strong> app.
+        </p>
+      </div>
+      <span class="app-id">com.assoliindustries.joexpress</span>
+
+
+      <section class="request-box" aria-label="Request account or data deletion by email">
+        <div data-lang="ar"><h2>طلب حذف الحساب أو البيانات عبر البريد</h2><p>يمكنك تقديم الطلب دون إعادة تثبيت التطبيق أو تسجيل الدخول. أرسل الرسالة بعد فتح تطبيق البريد، واذكر رقم الهاتف أو البريد المسجّل للتحقق من ملكية الحساب.</p></div>
+        <div data-lang="en"><h2>Request account or data deletion by email</h2><p>You can submit a request without reinstalling or signing in to the app. Send the email after opening your email app, and include your registered phone number or email so support can verify ownership.</p></div>
+        <div class="request-actions">
+          <a href="mailto:shahinamman11@gmail.com?subject=Jo%20Express%3A%20delete%20my%20account%20and%20associated%20data&amp;body=Please%20delete%20my%20Jo%20Express%20account%20and%20associated%20personal%20data.%0A%0ARegistered%20phone%20number%20or%20email%3A%0A%0APlease%20confirm%20receipt%20and%20explain%20any%20records%20that%20must%20be%20retained."><span data-lang="ar">طلب حذف الحساب والبيانات</span><span data-lang="en">Request account &amp; data deletion</span></a>
+          <a href="mailto:shahinamman11@gmail.com?subject=Jo%20Express%3A%20data%20deletion%20request&amp;body=Please%20delete%20the%20following%20Jo%20Express%20personal%20data.%0A%0ARegistered%20phone%20number%20or%20email%3A%0AData%20to%20delete%3A%0AShould%20my%20account%20stay%20open%3F%20Yes%20/%20No%0A%0APlease%20confirm%20the%20scope%20and%20timing%20of%20this%20request."><span data-lang="ar">طلب حذف بيانات محددة</span><span data-lang="en">Request deletion of specific data</span></a>
+        </div>
+        <p><a href="mailto:shahinamman11@gmail.com" dir="ltr">shahinamman11@gmail.com</a></p>
+        <p data-lang="ar">إذا لم تفتح الأزرار تطبيق البريد، أرسل طلبك مباشرة إلى العنوان أعلاه. عند طلب حذف بيانات محددة، وضّح ما تريد حذفه وما إذا كنت تريد إبقاء الحساب. يؤكد الدعم نطاق الطلب وموعد تنفيذه.</p>
+        <p data-lang="en">If the buttons do not open your email app, email support directly. For a data-only request, specify the data and whether to keep your account. Support will confirm the request's scope and timing.</p>
+      </section>
+
+      <!-- ============ 1. IN-APP ============ -->
+      <div data-lang="ar"><h2>الطريقة الأولى — من داخل التطبيق</h2></div>
+      <div data-lang="en"><h2>Option 1 — from inside the app</h2></div>
+
+      <div data-lang="ar">
+        <ol class="steps">
+          <li>افتح تطبيق <strong>جو اكسبرس</strong> وسجّل الدخول إلى حسابك.</li>
+          <li>انتقل إلى تبويب <strong>«حسابي»</strong> من الشريط السفلي.</li>
+          <li>مرّر إلى أسفل الصفحة واختر <strong>«حذف الحساب»</strong>.</li>
+          <li>أكّد طلبك مرتين — سيُطلب منك تأكيد نهائي قبل التنفيذ.</li>
+        </ol>
+        <p>
+          يتم تعطيل حسابك <strong>فوراً وبشكل دائم</strong>، ويُحذف رقم هاتفك من
+          سجلّنا، ويتم تسجيل خروجك. لن تتمكن من استخدام هذا الحساب مرة أخرى.
+        </p>
+      </div>
+      <div data-lang="en">
+        <ol class="steps">
+          <li>Open the <strong>Jo Express</strong> app and sign in.</li>
+          <li>Go to the <strong>“My Account”</strong> tab in the bottom bar.</li>
+          <li>Scroll to the bottom and tap <strong>“Delete account”</strong>.</li>
+          <li>Confirm twice — a final confirmation is required before it runs.</li>
+        </ol>
+        <p>
+          Your account is <strong>immediately and permanently disabled</strong>,
+          your phone number is removed from our records, and you are signed out.
+          You will not be able to use this account again.
+        </p>
+      </div>
+
+      <div class="warn">
+        <p data-lang="ar">
+          <strong>مهم:</strong> هذا الإجراء يُعطّل الحساب ويزيل رقم الهاتف، لكنه
+          لا يمحو وحده كامل بياناتك من قاعدة البيانات. لطلب <strong>المحو
+          الكامل</strong> لبياناتك الشخصية، استخدم الطريقة الثانية أدناه.
+        </p>
+        <p data-lang="en">
+          <strong>Important:</strong> this disables the account and removes your
+          phone number, but on its own it does not erase all of your data from
+          our database. To request <strong>full erasure</strong> of your personal
+          data, use Option 2 below.
+        </p>
+      </div>
+
+      <!-- ============ 2. BY EMAIL ============ -->
+      <div data-lang="ar"><h2>الطريقة الثانية — طلب المحو الكامل</h2></div>
+      <div data-lang="en"><h2>Option 2 — request full erasure</h2></div>
+
+      <div data-lang="ar">
+        <p>
+          أرسل بريداً إلكترونياً إلى العنوان أدناه من البريد المرتبط بحسابك، أو
+          اذكر رقم الهاتف المسجّل، مع وضع عبارة
+          <strong>«حذف البيانات»</strong> في عنوان الرسالة.
+        </p>
+        <p>
+          قد نطلب منك إثبات هويتك قبل التنفيذ، حمايةً لحسابك من انتحال الصفة.
+          ننفّذ الطلب خلال <strong>30 يوماً</strong> كحد أقصى، وهذه الخدمة
+          مجانية.
+        </p>
+      </div>
+      <div data-lang="en">
+        <p>
+          Email the address below from the address linked to your account, or
+          quote your registered phone number, with
+          <strong>“Data deletion”</strong> in the subject line.
+        </p>
+        <p>
+          We may ask you to verify your identity first, to protect your account
+          from impersonation. Requests are completed within a maximum of
+          <strong>30 days</strong>, free of charge.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <div class="k">
+          <span data-lang="ar">البريد الإلكتروني</span
+          ><span data-lang="en">Email</span>
+        </div>
+        <a class="v ltr" href="mailto:shahinamman11@gmail.com?subject=Data%20deletion%20request"
+          >shahinamman11@gmail.com</a
+        >
+      </div>
+
+      <!-- ============ 3. WHAT IS DELETED ============ -->
+      <div data-lang="ar"><h2>ما الذي يُحذف وما الذي يُحتفظ به</h2></div>
+      <div data-lang="en"><h2>What is deleted and what is retained</h2></div>
+
+      <div data-lang="ar">
+        <table>
+          <thead>
+            <tr>
+              <th>البيانات</th>
+              <th>ما يحدث لها</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>الاسم، رقم الهاتف، البريد الإلكتروني، صورة الملف الشخصي</td>
+              <td>تُحذف خلال 30 يوماً من الطلب</td>
+            </tr>
+            <tr>
+              <td>وثائق السائق (الهوية، رخصة القيادة، شهادة عدم المحكومية)</td>
+              <td>تُحذف خلال 30 يوماً من الطلب</td>
+            </tr>
+            <tr>
+              <td>بيانات الموقع الجغرافي</td>
+              <td>تُحذف خلال 30 يوماً من الطلب</td>
+            </tr>
+            <tr>
+              <td>صور إثبات التسليم</td>
+              <td>تُحذف تلقائياً بعد 90 يوماً من تاريخ التسليم</td>
+            </tr>
+            <tr>
+              <td>سجلات الرحلات والفواتير</td>
+              <td>
+                يُحتفظ بها مجهّلة الهوية للمدة التي يفرضها القانون الأردني
+                للسجلات المحاسبية
+              </td>
+            </tr>
+            <tr>
+              <td>مراسلات الدعم الفني</td>
+              <td>يُحتفظ بها حتى 24 شهراً لأغراض الدعم وحل النزاعات</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-lang="en">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>What happens to it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name, phone number, email address, profile photo</td>
+              <td>Deleted within 30 days of the request</td>
+            </tr>
+            <tr>
+              <td>
+                Driver documents (national ID, driving licence, non-conviction
+                certificate)
+              </td>
+              <td>Deleted within 30 days of the request</td>
+            </tr>
+            <tr>
+              <td>Location data</td>
+              <td>Deleted within 30 days of the request</td>
+            </tr>
+            <tr>
+              <td>Proof-of-delivery photos</td>
+              <td>Automatically deleted 90 days after delivery</td>
+            </tr>
+            <tr>
+              <td>Trip and billing records</td>
+              <td>
+                Retained in anonymised form for the period required by Jordanian
+                law for accounting records
+              </td>
+            </tr>
+            <tr>
+              <td>Support correspondence</td>
+              <td>Retained up to 24 months for support and dispute resolution</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <p data-lang="ar">
+          تفاصيل كل نوع من البيانات ومدد الاحتفاظ بها موضّحة بالكامل في
+          <a href="./#privacy">سياسة الخصوصية</a>.
+        </p>
+        <p data-lang="en">
+          Full details of every data type and its retention period are set out in
+          our <a href="./#privacy">Privacy Policy</a>.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        <span data-lang="ar">جو اكسبرس</span><span data-lang="en">Jo Express</span>
+        &middot; <span id="yr"></span> &middot;
+        <a href="./#privacy"
+          ><span data-lang="ar">سياسة الخصوصية</span
+          ><span data-lang="en">Privacy Policy</span></a
+        >
+      </p>
+    </footer>
+
+    <script>
+      function applyLang(lang) {
+        var html = document.documentElement;
+        html.lang = lang;
+        html.dir = lang === "ar" ? "rtl" : "ltr";
+        try {
+          localStorage.setItem("aje-lang", lang);
+        } catch (e) {}
+      }
+
+      function toggleLang() {
+        applyLang(document.documentElement.lang === "ar" ? "en" : "ar");
+      }
+
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem("aje-lang");
+        } catch (e) {}
+        applyLang(saved || "ar");
+        document.getElementById("yr").textContent = new Date().getFullYear();
+      })();
+    </script>
+  </body>
+</html>

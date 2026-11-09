@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Al-Captain</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Story ── */
+    .story-section { background: var(--white); }
+
+    .story-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .story-text p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .story-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .story-card {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .story-card:hover {
+      transform: translateX(6px);
+      box-shadow: var(--card-shadow);
+    }
+
+    body[dir="rtl"] .story-card:hover { transform: translateX(-6px); }
+
+    .story-card-icon {
+      width: 44px; height: 44px;
+      background: rgba(249,115,22,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .story-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .story-card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── Mission ── */
+    .mission-section { background: var(--light); }
+
+    /* ── Values ── */
+    .values-section { background: var(--white); }
+
+    .values-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .value-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .value-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    body[dir="rtl"] .value-card::before { transform-origin: right; }
+
+    .value-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .value-card:hover::before { transform: scaleX(1); }
+
+    .value-icon { font-size: 2rem; margin-bottom: 16px; }
+    .value-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .value-card p  { font-size: 0.87rem; color: var(--muted); }
+
+    /* ── Team ── */
+    .team-section {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%);
+      padding: 80px 0;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .team-section .section-tag { background: rgba(249,115,22,0.2); }
+    .team-section .section-title { color: var(--white); }
+    .team-section .section-sub   { color: rgba(255,255,255,0.55); margin-left: auto; margin-right: auto; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .team-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius);
+      padding: 32px 20px;
+      text-align: center;
+      transition: transform var(--transition), background var(--transition);
+    }
+
+    .team-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.08); }
+
+    .team-avatar {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--accent), #ff8c69);
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      font-weight: 800;
+    }
+
+    .team-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .team-card p  { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+    /* ── Contact ── */
+    .contact-section { background: var(--light); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 16px; }
+
+    .contact-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .contact-item-icon {
+      width: 40px; height: 40px;
+      background: rgba(249,115,22,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item h4 { font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .contact-item p  { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+    .contact-item a  { color: var(--accent); text-decoration: none; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    .contact-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--light);
+      transition: border-color var(--transition);
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      background: var(--white);
+    }
+
+    .form-group textarea { min-height: 100px; }
+
+    .form-status {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: none;
+    }
+    .form-status.success { background: rgba(74,222,128,0.1); color: #16a34a; display: block; }
+    .form-status.error   { background: rgba(239,68,68,0.1);  color: #dc2626; display: block; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .story-inner, .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+      .values-inner, .team-grid    { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .values-inner { grid-template-columns: 1fr; }
+      .team-grid    { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Al<span>-</span>Captain</a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+      <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn" onclick="toggleLang()">العربية</button>
+      <div class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="about.html" data-i18n="nav.about">About Us</a>
+  <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
+  <a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a>
+</div>
+
+<!-- ════ PAGE HERO ════ -->
+<section class="page-hero">
+  <div class="container">
+    <span class="section-tag" data-i18n="about.hero.tag">Our Story</span>
+    <h1 data-i18n="about.hero.title">Driving Better<br>Experiences</h1>
+    <p data-i18n="about.hero.sub">We started Al-Captain with one goal: make transportation simple, safe, and accessible for everyone.</p>
+  </div>
+</section>
+
+<!-- ════ STORY ════ -->
+<section class="section story-section">
+  <div class="container">
+    <div class="story-inner">
+      <div class="story-text reveal">
+        <span class="section-tag" data-i18n="story.tag">Who We Are</span>
+        <h2 class="section-title" data-i18n="story.title">Built by people who love to move</h2>
+        <p data-i18n="story.p1">Al-Captain was founded by Assoli Industries with a mission to reimagine how people get around. We believe every ride should be comfortable, predictable, and affordable.</p>
+        <p data-i18n="story.p2">Our platform connects passengers with a network of verified, professional drivers — bringing transparency and trust to every trip.</p>
+        <p data-i18n="story.p3">From our first beta to thousands of completed rides, we continue to build features driven by real user feedback.</p>
+      </div>
+      <div class="story-visual reveal">
+        <div class="story-card">
+          <div class="story-card-icon">🚀</div>
+          <div>
+            <h4>Founded 2025</h4>
+            <p>Started with a vision to modernize local transportation</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-icon">🌍</div>
+          <div>
+            <h4>15+ Cities</h4>
+            <p>Expanding across the region, one city at a time</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-icon">⭐</div>
+          <div>
+            <h4>4.8 Average Rating</h4>
+            <p>Trusted by thousands of daily passengers</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-icon">🔒</div>
+          <div>
+            <h4>100% Verified</h4>
+            <p>Every driver passes a thorough background check</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ MISSION ════ -->
+<section class="section mission-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag" data-i18n="mission.tag">Our Mission &amp; Vision</span>
+      <h2 class="section-title" data-i18n="mission.title">We exist to move people forward</h2>
+    </div>
+    <div class="grid-4">
+      <div class="card reveal">
+        <div class="card-icon">🛡️</div>
+        <h3 data-i18n="m1.title">Safety First</h3>
+        <p data-i18n="m1.desc">Every driver is verified, every ride is tracked, and every user is protected.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🤝</div>
+        <h3 data-i18n="m2.title">Accessibility</h3>
+        <p data-i18n="m2.desc">Affordable rides for everyone — passengers and drivers alike.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⏱️</div>
+        <h3 data-i18n="m3.title">Reliability</h3>
+        <p data-i18n="m3.desc">No cancellations, no surprises. Just dependable service, every time.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">💡</div>
+        <h3 data-i18n="m4.title">Innovation</h3>
+        <p data-i18n="m4.desc">We keep building smarter features to make your experience better.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ VALUES ════ -->
+<section class="section values-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag" data-i18n="values.tag">Our Values</span>
+      <h2 class="section-title" data-i18n="values.title">What drives us every day</h2>
+    </div>
+    <div class="values-inner">
+      <div class="value-card reveal">
+        <div class="value-icon">🔍</div>
+        <h3 data-i18n="v1.title">Transparency</h3>
+        <p data-i18n="v1.desc">Clear pricing, honest policies, and open communication.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon">🌐</div>
+        <h3 data-i18n="v2.title">Community</h3>
+        <p data-i18n="v2.desc">We grow when our passengers and drivers succeed together.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon">🤲</div>
+        <h3 data-i18n="v3.title">Trust</h3>
+        <p data-i18n="v3.desc">Every feature we build is designed to earn and keep your trust.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TEAM ════ -->
+<section class="team-section">
+  <div class="container">
+    <span class="section-tag" data-i18n="team.tag">Behind the Wheel</span>
+    <h2 class="section-title" data-i18n="team.title">The Assoli Industries Team</h2>
+    <p class="section-sub" data-i18n="team.sub">A passionate group of builders, designers, and operators dedicated to your journey.</p>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">A</div>
+        <h3>Abdullah Asoully</h3>
+        <p>Founder & CEO</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">🛠</div>
+        <h3>Engineering Team</h3>
+        <p>Mobile & Backend</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">🎨</div>
+        <h3>Design Team</h3>
+        <p>UX & Product Design</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section class="section contact-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag" data-i18n="contact.tag">Get in Touch</span>
+      <h2 class="section-title" data-i18n="contact.title">We&#x27;d love to hear from you</h2>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div>
+            <h4 data-i18n="contact.email">Email</h4>
+            <p><a href="mailto:abdullah.asoully@gmail.com">abdullah.asoully@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🏢</div>
+          <div>
+            <h4 data-i18n="contact.company">Company</h4>
+            <p>Assoli Industries</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📄</div>
+          <div>
+            <h4>Privacy</h4>
+            <p><a href="privacy-policy.html">View Privacy Policy →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="How can we help?" required></textarea>
+        </div>
+        <div class="form-status" id="formStatus"></div>
+        <button type="submit" class="btn btn-primary">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">Al<span>-</span>Captain</div>
+        <p data-i18n="footer.tagline">Connecting passengers with trusted drivers across the region.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.pages">Pages</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+          <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contact</h4>
+        <ul>
+          <li><a href="mailto:abdullah.asoully@gmail.com">abdullah.asoully@gmail.com</a></li>
+          <li><a href="#">Assoli Industries</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.copy">© 2026 Assoli Industries. All rights reserved.</span>
+      <span data-i18n="footer.built">Built with ♥</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const status = document.getElementById("formStatus");
+    const btn = e.target.querySelector("button[type=submit]");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    // simulate async send
+    setTimeout(() => {
+      status.className = "form-status success";
+      status.textContent = currentLang === "ar"
+        ? "✓ تم إرسال رسالتك بنجاح!"
+        : "✓ Message sent! We'll get back to you soon.";
+      e.target.reset();
+      btn.disabled = false;
+      btn.textContent = currentLang === "ar" ? "إرسال →" : "Send Message →";
+
+      setTimeout(() => { status.className = "form-status"; }, 5000);
+    }, 1200);
+  }
+</script>
+</body>
+</html>

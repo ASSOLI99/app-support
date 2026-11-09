@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Al-Captain</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Privacy layout ── */
+    .pp-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 40px;
+      align-items: start;
+      padding: 60px 0;
+    }
+
+    /* sticky sidebar TOC */
+    .pp-toc {
+      position: sticky;
+      top: 84px;
+    }
+
+    .toc-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toc-list a {
+      display: block;
+      font-size: 0.83rem;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: color var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    body[dir="rtl"] .toc-list a {
+      border-left: none;
+      border-right: 2px solid transparent;
+    }
+
+    .toc-list a:hover,
+    .toc-list a.active {
+      color: var(--accent);
+      background: rgba(249,115,22,0.06);
+      border-color: var(--accent);
+    }
+
+    /* content sections */
+    .pp-sections { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+    .pp-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 30px;
+      scroll-margin-top: 84px;
+      transition: box-shadow var(--transition);
+    }
+
+    .pp-card:hover { box-shadow: var(--card-shadow); }
+
+    .pp-card h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pp-card h2 .pp-num {
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pp-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .pp-card p:last-child { margin-bottom: 0; }
+
+    .pp-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pp-card ul li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    body[dir="rtl"] .pp-card ul li { padding-left: 0; padding-right: 20px; }
+
+    .pp-card ul li::before {
+      content: "✓";
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+    }
+
+    body[dir="rtl"] .pp-card ul li::before { left: auto; right: 0; }
+
+    .pp-note {
+      background: rgba(249,115,22,0.06);
+      border: 1px solid rgba(249,115,22,0.15);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.86rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    /* tables */
+    .pp-table-wrap { overflow-x: auto; margin-top: 14px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+    }
+
+    thead tr { background: var(--light); }
+
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 2px solid var(--border);
+    }
+
+    body[dir="rtl"] th { text-align: right; }
+
+    td {
+      padding: 10px 14px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--light); }
+
+    td strong { color: var(--navy); font-weight: 600; }
+
+    /* contact line */
+    .contact-line {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .contact-line a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+    .contact-line a:hover { text-decoration: underline; }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .pp-layout { grid-template-columns: minmax(0, 1fr); }
+      .pp-toc { display: none; }
+      .pp-card { padding: 22px 18px; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Al<span>-</span>Captain</a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+      <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn" onclick="toggleLang()">العربية</button>
+      <div class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <a href="index.html" data-i18n="nav.home">Home</a>
+  <a href="about.html" data-i18n="nav.about">About Us</a>
+  <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
+  <a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a>
+</div>
+
+<!-- ════ PAGE HERO ════ -->
+<section class="page-hero">
+  <div class="container">
+    <span class="section-tag" data-i18n="pp.hero.tag">Legal</span>
+    <h1 data-i18n="pp.hero.title">Privacy Policy</h1>
+    <p data-i18n="pp.hero.sub">Last updated: March 17, 2026</p>
+  </div>
+</section>
+
+<!-- ════ CONTENT ════ -->
+<div class="container">
+  <div class="pp-layout">
+
+    <!-- sidebar TOC -->
+    <aside class="pp-toc">
+      <div class="toc-title">Contents</div>
+      <ul class="toc-list" id="tocList">
+        <li><a href="#s1">1. Introduction</a></li>
+        <li><a href="#s2">2. Data We Collect</a></li>
+        <li><a href="#s3">3. How We Use It</a></li>
+        <li><a href="#s4">4. Third Parties</a></li>
+        <li><a href="#s5">5. Permissions</a></li>
+        <li><a href="#s6">6. Storage & Security</a></li>
+        <li><a href="#s7">7. Retention</a></li>
+        <li><a href="#s8">8. Your Rights</a></li>
+        <li><a href="#s9">9. Children</a></li>
+        <li><a href="#s10">10. Changes</a></li>
+        <li><a href="#s11">11. Contact</a></li>
+      </ul>
+    </aside>
+
+    <!-- sections -->
+    <div class="pp-sections">
+
+      <div class="pp-card" id="s1">
+        <h2><span class="pp-num">1</span> <span data-i18n="pp.s1.title">1. Introduction</span></h2>
+        <p data-i18n="pp.s1.body">Welcome to Al-Captain, a ride-booking and transportation app connecting passengers with drivers. Assoli Industries is committed to protecting your privacy and personal data. This policy explains how we collect, use, share, and protect your information. By using the app, you agree to the terms described in this policy.</p>
+      </div>
+
+      <div class="pp-card" id="s2">
+        <h2><span class="pp-num">2</span> <span data-i18n="pp.s2.title">2. Data We Collect</span></h2>
+        <div class="pp-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th.right">Right</th>
+                <th data-i18n="th.description">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong data-i18n="pp.dc1">Account &amp; Profile</strong></td>    <td data-i18n="pp.dc1d">Name, phone, gender, profile picture, UUID, user type, email</td></tr>
+              <tr><td><strong data-i18n="pp.dc2">Location</strong></td>              <td data-i18n="pp.dc2d">Current location, trip start/end points, saved addresses</td></tr>
+              <tr><td><strong data-i18n="pp.dc3">Trip &amp; Booking</strong></td>        <td data-i18n="pp.dc3d">Booking details, ride history, ride status, driver/passenger info</td></tr>
+              <tr><td><strong data-i18n="pp.dc4">Financial</strong></td>             <td data-i18n="pp.dc4d">Subscription info, transaction history, pricing data</td></tr>
+              <tr><td><strong data-i18n="pp.dc5">Device &amp; Usage</strong></td>        <td data-i18n="pp.dc5d">Notifications, session tokens, locally cached data</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="pp-card" id="s3">
+        <h2><span class="pp-num">3</span> <span data-i18n="pp.s3.title">3. How We Use Your Data</span></h2>
+        <ul>
+          <li data-i18n="pp.use1">Service delivery — connecting passengers with drivers, processing bookings, displaying maps</li>
+          <li data-i18n="pp.use2">Authentication — sign-in via Google or Apple</li>
+          <li data-i18n="pp.use3">Notifications — sending updates about trips and bookings</li>
+          <li data-i18n="pp.use4">App improvement — analyzing usage patterns to improve the service</li>
+          <li data-i18n="pp.use5">Safety &amp; security — preventing fraud and ensuring user safety</li>
+          <li data-i18n="pp.use6">Customer support — responding to help requests</li>
+        </ul>
+      </div>
+
+      <div class="pp-card" id="s4">
+        <h2><span class="pp-num">4</span> <span data-i18n="pp.s4.title">4. Third-Party Sharing</span></h2>
+        <div class="pp-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th.party">Party</th>
+                <th data-i18n="th.purpose">Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong data-i18n="pp.tp1">Supabase</strong></td>             <td data-i18n="pp.tp1p">Database and authentication</td></tr>
+              <tr><td><strong data-i18n="pp.tp2">Google Maps / Places</strong></td>           <td data-i18n="pp.tp2p">Map display and location suggestions</td></tr>
+              <tr><td><strong data-i18n="pp.tp3">Google OAuth</strong></td>          <td data-i18n="pp.tp3p">Sign-in</td></tr>
+              <tr><td><strong data-i18n="pp.tp4">Apple Authentication</strong></td>  <td data-i18n="pp.tp4p">iOS sign-in</td></tr>
+              <tr><td><strong data-i18n="pp.tp5">Twilio</strong></td>               <td data-i18n="pp.tp5p">Sending verification messages (OTP)</td></tr>
+              <tr><td><strong data-i18n="pp.tp6">Expo Notifications</strong></td>   <td data-i18n="pp.tp6p">App push notifications</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pp-note" data-i18n="pp.s4.note">We do not sell your personal data to any third party.</div>
+      </div>
+
+      <div class="pp-card" id="s5">
+        <h2><span class="pp-num">5</span> <span data-i18n="pp.s5.title">5. Permissions Requested</span></h2>
+        <div class="pp-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th.perm">Permission</th>
+                <th data-i18n="th.reason">Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong data-i18n="pp.pm1">Location</strong></td>       <td data-i18n="pp.pm1r">Set your pickup point and help the driver reach you</td></tr>
+              <tr><td><strong data-i18n="pp.pm2">Microphone</strong></td>     <td data-i18n="pp.pm2r">In-app voice communication features</td></tr>
+              <tr><td><strong data-i18n="pp.pm3">Photo Library</strong></td>  <td data-i18n="pp.pm3r">Uploading a profile picture or vehicle information</td></tr>
+              <tr><td><strong data-i18n="pp.pm4">Notifications</strong></td>  <td data-i18n="pp.pm4r">Trip alerts and booking updates</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="pp-card" id="s6">
+        <h2><span class="pp-num">6</span> <span data-i18n="pp.s6.title">6. Data Storage &amp; Security</span></h2>
+        <ul>
+          <li data-i18n="pp.sec1">Data stored on encrypted Supabase servers</li>
+          <li data-i18n="pp.sec2">Session data stored locally using secure storage (AsyncStorage)</li>
+          <li data-i18n="pp.sec3">All data transfers use HTTPS</li>
+          <li data-i18n="pp.sec4">Authentication tokens are automatically refreshed</li>
+        </ul>
+      </div>
+
+      <div class="pp-card" id="s7">
+        <h2><span class="pp-num">7</span> <span data-i18n="pp.s7.title">7. Data Retention</span></h2>
+        <ul>
+          <li data-i18n="pp.ret1">Account data: retained while your account is active</li>
+          <li data-i18n="pp.ret2">Trip history: retained for operational and dispute resolution purposes</li>
+          <li data-i18n="pp.ret3">Upon account deletion, personal data is removed within 30 days</li>
+        </ul>
+      </div>
+
+      <div class="pp-card" id="s8">
+        <h2><span class="pp-num">8</span> <span data-i18n="pp.s8.title">8. Your Rights</span></h2>
+        <div class="pp-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th.right">Right</th>
+                <th data-i18n="th.description">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong data-i18n="pp.r1">Access</strong></td>   <td data-i18n="pp.r1d">View your personal data stored with us</td></tr>
+              <tr><td><strong data-i18n="pp.r2">Correct</strong></td>  <td data-i18n="pp.r2d">Fix any inaccurate information</td></tr>
+              <tr><td><strong data-i18n="pp.r3">Delete</strong></td>   <td data-i18n="pp.r3d">Remove your account and all associated data</td></tr>
+              <tr><td><strong data-i18n="pp.r4">Opt Out</strong></td>  <td data-i18n="pp.r4d">Unsubscribe from notifications at any time</td></tr>
+              <tr><td><strong data-i18n="pp.r5">Object</strong></td>   <td data-i18n="pp.r5d">Dispute processing of your data for certain purposes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="contact-line">
+          <span data-i18n="pp.s8.contact">To exercise these rights, contact us at:</span>
+          <a href="mailto:abdullah.asoully@gmail.com"> abdullah.asoully@gmail.com</a>
+        </p>
+      </div>
+
+      <div class="pp-card" id="s9">
+        <h2><span class="pp-num">9</span> <span data-i18n="pp.s9.title">9. Children&#x27;s Privacy</span></h2>
+        <p data-i18n="pp.s9.body">Al-Captain is not intended for individuals under the age of 18. We do not knowingly collect data from children.</p>
+      </div>
+
+      <div class="pp-card" id="s10">
+        <h2><span class="pp-num">10</span> <span data-i18n="pp.s10.title">10. Policy Changes</span></h2>
+        <p data-i18n="pp.s10.body">We may update this policy from time to time. You will be notified of material changes via an in-app notification or email. Continued use of the app after an update constitutes acceptance of the revised policy.</p>
+      </div>
+
+      <div class="pp-card" id="s11">
+        <h2><span class="pp-num">11</span> <span data-i18n="pp.s11.title">11. Contact Us</span></h2>
+        <p class="contact-line">
+          Email: <a href="mailto:abdullah.asoully@gmail.com">abdullah.asoully@gmail.com</a>
+        </p>
+        <p class="contact-line" style="margin-top:8px;">Company: <strong>Assoli Industries</strong></p>
+      </div>
+
+    </div><!-- /pp-sections -->
+  </div><!-- /pp-layout -->
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">Al<span>-</span>Captain</div>
+        <p data-i18n="footer.tagline">Connecting passengers with trusted drivers across the region.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.pages">Pages</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+          <li><a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a></li>
+      <li><a href="delete-account.html" data-i18n="nav.deletion">Delete account &amp; data</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contact</h4>
+        <ul>
+          <li><a href="mailto:abdullah.asoully@gmail.com">abdullah.asoully@gmail.com</a></li>
+          <li><a href="#">Assoli Industries</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.copy">© 2026 Assoli Industries. All rights reserved.</span>
+      <span data-i18n="footer.built">Built with ♥</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  /* ── TOC active link on scroll ── */
+  const sections = document.querySelectorAll(".pp-card[id]");
+  const tocLinks = document.querySelectorAll(".toc-list a");
+
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove("active"));
+        const active = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+        if (active) active.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+
+  sections.forEach(s => tocObserver.observe(s));
+</script>
+</body>
+</html>
